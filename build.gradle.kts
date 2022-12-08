@@ -30,6 +30,7 @@ kotlin {
                 implementation(compose.desktop.currentOs)
             }
         }
+
         @Suppress("UNUSED_VARIABLE")
         val jvmTest by getting
     }
