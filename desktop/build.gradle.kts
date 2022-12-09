@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-group = "com.mmolosay"
+group = "com.mmolosay.mtheory.desktop"
 version = "1.0-SNAPSHOT"
 
 kotlin {
