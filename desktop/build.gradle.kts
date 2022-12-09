@@ -1,20 +1,13 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    id("mtheory.multiplatform.kotlin")
+    id("mtheory.multiplatform.compose")
 }
 
 group = "com.mmolosay.mtheory.desktop"
-version = "1.0-SNAPSHOT"
 
 kotlin {
-    jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
-        }
-        withJava()
-    }
     sourceSets {
         @Suppress("UNUSED_VARIABLE")
         val jvmMain by getting {

@@ -20,9 +20,13 @@ dependencies {
 
 gradlePlugin {
     plugins {
-//        register("androidApplicationCompose") {
-//            id = "nowinandroid.android.application.compose"
-//            implementationClass = "AndroidApplicationComposeConventionPlugin"
-//        }
+        register("multiplatformCompose") {
+            id = "mtheory.multiplatform.compose"
+            implementationClass = "MultiplatformComposePlugin"
+        }
+        register("multiplatformKotlin") {
+            id = "mtheory.multiplatform.kotlin"
+            implementationClass = "MultiplatformKotlinPlugin"
+        }
     }
 }
