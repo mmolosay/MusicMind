@@ -9,9 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
-/**
- * Root component of whole application's UI.
- */
 @Composable
 fun MTheoryApplication() {
     var text by remember { mutableStateOf("Hello, World!") }
