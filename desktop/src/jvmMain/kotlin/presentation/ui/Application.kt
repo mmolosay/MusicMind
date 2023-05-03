@@ -1,4 +1,4 @@
-package ui
+package presentation.ui
 
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
