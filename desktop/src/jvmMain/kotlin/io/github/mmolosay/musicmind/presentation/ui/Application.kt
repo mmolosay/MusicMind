@@ -1,4 +1,4 @@
-package presentation.ui
+package io.github.mmolosay.musicmind.presentation.ui
 
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 @Composable
-fun MTheoryApplication() {
+fun MusicMindApplication() {
     var text by remember { mutableStateOf("Hello, World!") }
 
     MaterialTheme {
