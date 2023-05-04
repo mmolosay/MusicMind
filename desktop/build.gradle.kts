@@ -28,3 +28,7 @@ compose.desktop {
         }
     }
 }
+
+dependencies {
+    implementation(project(":shared"))
+}

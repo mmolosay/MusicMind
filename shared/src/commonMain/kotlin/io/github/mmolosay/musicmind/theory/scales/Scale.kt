@@ -1,16 +1,23 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-import io.github.mmolosay.musicmind.theory.intervals.Intervals
+import io.github.mmolosay.musicmind.theory.intervals.Interval
+import io.github.mmolosay.musicmind.theory.perception.Pitch
 
 /**
- * An unspecific scale is any set of musical notes ordered by fundamental frequency or pitch.
- *
- * [Scale – Wikipedia](https://en.wikipedia.org/wiki/Scale_(music))
+ * An implementation of scale with a [tonic] note, represented by an interval from
+ * the first note of instrument.
  */
 class Scale(
-    val notes: List<Intervals>,
-)
+    val tonic: Interval,
+    override val intervals: List<Interval>,
+) : AtonalScale {
 
-val Scale.size: Int
-    get() = notes.size
-
+    sealed interface Note {
+        class KeyNote(
+            val ordinal: Int,
+        ) : Note
+        class PitchNote(
+            val pitch: Pitch,
+        ) : Note
+    }
+}

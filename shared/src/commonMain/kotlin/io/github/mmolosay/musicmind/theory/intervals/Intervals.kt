@@ -4,6 +4,12 @@ import io.github.mmolosay.musicmind.theory.Ratio
 import io.github.mmolosay.musicmind.theory.perception.Stability
 import io.github.mmolosay.musicmind.theory.to
 
+val Int.steps: Interval
+    get() = UndirectedInterval(this)
+
+fun List<Int>.asIntervals(): List<Interval> =
+    map { UndirectedInterval(it) }
+
 // TODO: provided intervals are pure.
 //      actual, accurate ratio is defined by TuningSystem
 enum class Intervals(

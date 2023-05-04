@@ -1,6 +1,8 @@
 package io.github.mmolosay.musicmind.theory.context
 
-import io.github.mmolosay.musicmind.theory.instrument.Instrument
+import io.github.mmolosay.musicmind.theory.instruments.Instrument
+import io.github.mmolosay.musicmind.theory.perception.Pitch
+import io.github.mmolosay.musicmind.theory.scales.Scale
 
 /**
  * A music context is an environment, in which music happens.
@@ -8,4 +10,6 @@ import io.github.mmolosay.musicmind.theory.instrument.Instrument
  */
 interface MusicContext {
     val instrument: Instrument
+
+    fun Scale.pitches(): List<Pitch>
 }

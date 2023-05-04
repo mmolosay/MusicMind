@@ -1,4 +1,4 @@
-package io.github.mmolosay.musicmind.theory.distribution
+package io.github.mmolosay.musicmind.theory.cents
 
 /**
  * [Wikipedia](https://en.wikipedia.org/wiki/Cent_(music))

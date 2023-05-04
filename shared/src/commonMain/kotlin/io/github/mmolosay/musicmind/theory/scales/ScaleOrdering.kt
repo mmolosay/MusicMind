@@ -1,7 +1,7 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-val Scale.isAscending: Boolean
+val AtonalScale.isAscending: Boolean
     get() = TODO()
 
-val Scale.isDescending: Boolean
+val AtonalScale.isDescending: Boolean
     get() = !isAscending

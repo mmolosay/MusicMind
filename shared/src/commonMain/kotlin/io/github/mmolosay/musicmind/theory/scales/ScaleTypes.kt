@@ -1,10 +1,10 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-val Scale.isHeptatonic: Boolean
+val AtonalScale.isHeptatonic: Boolean
     get() = (size == 7)
 
-val Scale.isDiatonic: Boolean
+val AtonalScale.isDiatonic: Boolean
     get() = (isHeptatonic && TODO())
 
-val Scale.isPentatonic: Boolean
+val AtonalScale.isPentatonic: Boolean
     get() = (size == 5)
