@@ -5,11 +5,11 @@ import io.github.mmolosay.musicmind.theory.perception.Stability
 import io.github.mmolosay.musicmind.theory.to
 
 // TODO: provided intervals are pure.
-//      actual, accurate ratio is defined by instrument tuning and is rarely a ratio of integers
+//      actual, accurate ratio is defined by TuningSystem
 enum class Intervals(
     override val ratio: Ratio,
     override val stability: Stability,
-) : Interval {
+) : IntervalOld {
 
     Unison(
         ratio = 1 to 1,

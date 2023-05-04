@@ -1,9 +1,10 @@
 package io.github.mmolosay.musicmind.theory.intervals
 
-import io.github.mmolosay.musicmind.theory.Ratio
-import io.github.mmolosay.musicmind.theory.perception.Stability
-
-interface Interval {
-    val ratio: Ratio
-    val stability: Stability
+/**
+ * Music interval, defined by a [steps] difference between two pitched.
+ *
+ * [Interval – Wikipedia](https://en.wikipedia.org/wiki/Interval_(music))
+ */
+sealed interface Interval {
+    val steps: Int
 }
