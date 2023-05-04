@@ -8,7 +8,7 @@ import io.github.mmolosay.musicmind.theory.pitch.Pitch
  * the first note of instrument.
  */
 class Scale(
-    val tonic: Interval,
+    val tonic: Interval, // TODO: change: should not depend on instrument
     override val intervals: List<Interval>,
 ) : AtonalScale {
 
