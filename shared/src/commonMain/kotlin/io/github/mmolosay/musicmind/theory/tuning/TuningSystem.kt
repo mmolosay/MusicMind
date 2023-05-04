@@ -20,16 +20,18 @@ import io.github.mmolosay.musicmind.theory.intervals.asIntervals
  */
 sealed interface TuningSystem {
 
-    val MajorIntervals: List<Interval>
+    val pitchClasses: Int
+
+    val majorIntervals: List<Interval>
 
     /**
      * [Equal temperament – Wikipedia](https://en.wikipedia.org/wiki/Equal_temperament)
      */
     class EqualTemperament(
-        val keysPerOctave: Int,
+        override val pitchClasses: Int,
     ) : TuningSystem {
 
-        override val MajorIntervals: List<Interval> =
+        override val majorIntervals: List<Interval> =
             listOf(2, 2, 1, 2, 2, 2, 1).asIntervals()
     }
 }
