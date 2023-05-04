@@ -1,7 +1,7 @@
 package io.github.mmolosay.musicmind.theory.scales
 
 import io.github.mmolosay.musicmind.theory.intervals.Interval
-import io.github.mmolosay.musicmind.theory.perception.Pitch
+import io.github.mmolosay.musicmind.theory.pitch.Pitch
 
 /**
  * An implementation of scale with a [tonic] note, represented by an interval from

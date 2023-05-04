@@ -1,8 +1,6 @@
 package io.github.mmolosay.musicmind.theory.tuning
 
-import io.github.mmolosay.musicmind.theory.perception.Pitch
-import io.github.mmolosay.musicmind.theory.scales.Scale
-import java.security.Key
+import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import kotlin.math.pow
 
 object Tuner {

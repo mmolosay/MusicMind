@@ -1,4 +1,4 @@
-package io.github.mmolosay.musicmind.theory.perception
+package io.github.mmolosay.musicmind.theory.pitch
 
 /**
  * Pitch is a note without a duration; a percievable frequency of sound.

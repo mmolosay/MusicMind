@@ -1,7 +1,7 @@
 package io.github.mmolosay.musicmind.theory.context
 
 import io.github.mmolosay.musicmind.theory.instruments.Instrument
-import io.github.mmolosay.musicmind.theory.perception.Pitch
+import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.scales.Scale
 
 /**

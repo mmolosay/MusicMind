@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
-import io.github.mmolosay.musicmind.theory.perception.Pitch
+import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.tuning.TuningSystem
 
 interface Instrument {
