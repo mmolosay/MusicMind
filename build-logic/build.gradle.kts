@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.mmolosay.mtheory.buildlogic"
+group = "io.github.mmolosay"
 
 repositories {
     mavenLocal()
@@ -14,6 +14,7 @@ repositories {
 // TODO: change to compileOnly
 // TODO: use versions catalog
 dependencies {
+    // TODO: update versions
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
     implementation("org.jetbrains.compose:compose-gradle-plugin:1.2.1")
 }

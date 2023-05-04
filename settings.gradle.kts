@@ -4,5 +4,7 @@ pluginManagement {
     includeBuild("build-logic")
 }
 
-rootProject.name = "MTheory"
+rootProject.name = "MusicMind"
+
+//include(":shared")
 include(":desktop")

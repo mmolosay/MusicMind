@@ -5,7 +5,7 @@ plugins {
     id("mtheory.multiplatform.compose")
 }
 
-group = "com.mmolosay.mtheory.desktop"
+group = "io.github.mmolosay"
 
 kotlin {
     sourceSets {
@@ -23,7 +23,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "MTheory"
+            packageName = "MusicMind"
             packageVersion = "1.0.0"
         }
     }
