@@ -6,5 +6,5 @@ pluginManagement {
 
 rootProject.name = "MusicMind"
 
-//include(":shared")
+include(":shared")
 include(":desktop")
