@@ -3,20 +3,12 @@ package io.github.mmolosay.musicmind.theory.pitch
 object PitchClasses {
 
     fun List<Pitch>.classes(): List<PitchClass> {
-        val list = mutableListOf<PitchClass>()
-        val classes = countClasses()
-        val end = first() * 2
-        var ordinal = 0
-        // do while we don't reach an octave
-        while (get(ordinal) != end) {
-            val pitches = mutableListOf<Pitch>()
-            for (i in ordinal until size step classes) {
-                pitches.add(get(i))
-            }
-            list.add(PitchClass(pitches))
-            ordinal++
+        val count = countClasses()
+        val classes = List(count) { mutableListOf<Pitch>() }
+        for (i in indices) {
+            classes[i % count].add(get(i))
         }
-        return list
+        return classes.map { PitchClass(it) }
     }
 
     private fun List<Pitch>.countClasses(): Int {
