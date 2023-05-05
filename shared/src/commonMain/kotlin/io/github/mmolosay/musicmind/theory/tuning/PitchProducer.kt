@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.tuning
 
-import io.github.mmolosay.musicmind.theory.instruments.ChromaticInstrument
+import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
@@ -9,7 +9,7 @@ class PitchProducer(
     private val pitchSequencer: PitchSequencer,
 ) {
 
-    fun ChromaticInstrument.pitches(): List<Pitch> =
+    fun DiscretePitchInstrument.pitches(): List<Pitch> =
         pitches(
             amount = keys,
             tuningSystem = tuningSystem,

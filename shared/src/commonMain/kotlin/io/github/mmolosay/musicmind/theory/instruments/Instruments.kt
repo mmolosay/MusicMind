@@ -1,6 +1,7 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.context.MusicContext
+import io.github.mmolosay.musicmind.theory.instruments.discrete.DiscretePitchInstrumentImpl
 import io.github.mmolosay.musicmind.theory.tuning.PitchProducer
 import io.github.mmolosay.musicmind.theory.tuning.PitchSequencer
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
@@ -19,7 +20,7 @@ class Instruments(
         instrumentTuning: InstrumentTuning = Tunings.ConcertPiano(),
         keys: Int = PianoFullSizeKeys,
     ): Instrument =
-        ChromaticInstrument(
+        DiscretePitchInstrumentImpl(
             keys = keys,
             tuningSystem = tuningSystem,
             tuning = instrumentTuning,

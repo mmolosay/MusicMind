@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.context
 
-import io.github.mmolosay.musicmind.theory.instruments.ChromaticInstrument
+import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.ContinuousPitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.Instrument
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
@@ -22,8 +22,8 @@ interface MusicContext {
     )
 }
 
-val MusicContext.instrumentAsChromatic: ChromaticInstrument?
-    get() = (instrument as? ChromaticInstrument)
+val MusicContext.instrumentAsChromatic: DiscretePitchInstrument?
+    get() = (instrument as? DiscretePitchInstrument)
 
 val MusicContext.instrumentAsContiuousPitch: ContinuousPitchInstrument?
     get() = (instrument as? ContinuousPitchInstrument)

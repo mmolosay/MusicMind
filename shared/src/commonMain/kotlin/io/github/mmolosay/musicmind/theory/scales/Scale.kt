@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-import io.github.mmolosay.musicmind.theory.intervals.Interval
+import io.github.mmolosay.musicmind.theory.distance.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 
 /**
@@ -9,17 +9,7 @@ import io.github.mmolosay.musicmind.theory.pitch.Pitch
  *
  * [Scale – Wikipedia](https://en.wikipedia.org/wiki/Scale_(music))
  */
-class Scale(
+data class Scale(
     val tonic: Pitch,
-    override val intervals: List<Interval>,
-) : AtonalScale {
-
-//    sealed interface Note {
-//        class KeyNote(
-//            val ordinal: Int,
-//        ) : Note
-//        class PitchNote(
-//            val pitch: Pitch,
-//        ) : Note
-//    }
-}
+    override val intervals: List<Distance>,
+) : AtonalScale

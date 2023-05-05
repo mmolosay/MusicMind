@@ -9,10 +9,8 @@ import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
  * Instrument is always tuned.
  */
 sealed interface Instrument {
-
     val tuning: InstrumentTuning
     val range: ClosedRange<Pitch>
 
     val Pitch.exists: Boolean
-        get() = this in range
 }

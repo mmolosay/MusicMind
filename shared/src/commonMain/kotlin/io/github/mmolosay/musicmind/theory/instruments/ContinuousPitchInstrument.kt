@@ -1,15 +1,8 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
-import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
-import io.github.mmolosay.musicmind.theory.pitch.Pitch
-
 /**
- * A continuous pitch instruments are those that made to produce any (microtonal) pitch in its range.
+ * Continuous pitch instruments are those that are made to produce any (microtonal) pitch in its range.
+ * Examples of such instruments are piano, xylophone, giutars (not every tuning).
  */
-data class ContinuousPitchInstrument internal constructor(
-    override val tuning: InstrumentTuning,
-) : Instrument {
-
-    override val range: ClosedRange<Pitch>
-        get() = TODO()
+interface ContinuousPitchInstrument : Instrument {
 }
