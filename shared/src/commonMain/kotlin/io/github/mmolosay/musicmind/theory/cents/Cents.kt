@@ -1,6 +1,15 @@
 package io.github.mmolosay.musicmind.theory.cents
 
 /**
+ * Cent is a 1/100th of a semitone in 12-TET.
+ *
+ * It does not change its "size" in different tuning systems, and octave will always consist of 1200 cents in any.
+ * However, since different tuning systems divide an octave in different ways (number of parts and its sizes),
+ * the smallest interval (semitone in 12-TET) will be different, thus it will take different amount of cents to fill it.
+ *
+ * As said earlier, in a 12-TET there are 100 cents in a semitone.
+ * It would be 38.7109... cents in 31-TET to fill its smallest interval.
+ *
  * [Wikipedia](https://en.wikipedia.org/wiki/Cent_(music))
  */
 @JvmInline
