@@ -19,7 +19,7 @@ class Instruments(
         tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
         instrumentTuning: InstrumentTuning = Tunings.ConcertPiano(),
         keys: Int = PianoFullSizeKeys,
-    ): Instrument =
+    ): DiscretePitchInstrument =
         DiscretePitchInstrumentImpl(
             keys = keys,
             tuningSystem = tuningSystem,

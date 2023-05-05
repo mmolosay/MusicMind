@@ -1,8 +1,10 @@
 package io.github.mmolosay.musicmind.theory.instruments.discrete
 
-import io.github.mmolosay.musicmind.theory.distance.Distance
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Key
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Note
+import io.github.mmolosay.musicmind.theory.partition.OctavePartition
+import io.github.mmolosay.musicmind.theory.partition.verify
+import io.github.mmolosay.musicmind.theory.scales.FiniteNoteScale
 import io.github.mmolosay.musicmind.theory.tuning.PitchProducer
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
@@ -19,20 +21,22 @@ data class DiscretePitchInstrumentImpl internal constructor(
             .mapIndexed { i, pitch -> Note(key = Key(ordinal = i + 1), pitch = pitch) }
     }
 
-    override fun Note.scale(intervals: List<Distance>): List<Note>? {
+    override fun Note.scale(partition: OctavePartition): FiniteNoteScale? {
         if (!exists) return null
+        tuningSystem.verify(partition)
         val notes = mutableListOf(this)
         var lastNote = this
-        intervals.forEach {
-            val note = lastNote + it
+        // iterate over distances without last "looping" one
+        for (i in 0 until partition.distribution.size - 1) {
+            val note = lastNote + partition.distribution[i]
             if (note != null) {
                 notes.add(note)
                 lastNote = note
             } else {
-                return notes
+                break
             }
         }
-        return notes
+        return FiniteNoteScale(entries = notes)
     }
 
 }

@@ -1,7 +1,8 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
-import io.github.mmolosay.musicmind.theory.distance.Distance
+import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
+import io.github.mmolosay.musicmind.theory.scales.FiniteNoteScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 
 /**
@@ -18,12 +19,18 @@ interface DiscretePitchInstrument : Instrument {
 
     val Note.exists: Boolean
 
-    fun Note.scale(intervals: List<Distance>): List<Note>?
+    fun List<Note>.atKey(predicate: (Key) -> Boolean): Note
+
+    fun Note.scale(partition: OctavePartition): FiniteNoteScale?
 
     data class Note internal constructor(
         val key: Key,
         val pitch: Pitch,
-    )
+    ) : Comparable<Note> {
+
+        override fun compareTo(other: Note): Int =
+            this.key.compareTo(other.key)
+    }
 
     /**
      * Represents a specific physical position on an instrument.
@@ -32,9 +39,13 @@ interface DiscretePitchInstrument : Instrument {
      * A strategy of obtaining a set of all instrument's keys in correct order is provided by the instrument itself.
      */
     @JvmInline
-    value class Key(val ordinal: Int) {
+    value class Key(val ordinal: Int) : Comparable<Key> {
+
         init {
             require(ordinal > 0) { "Key ordinal must be greater than zero" }
         }
+
+        override fun compareTo(other: Key): Int =
+            this.ordinal.compareTo(other.ordinal)
     }
 }

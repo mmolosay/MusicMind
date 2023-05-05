@@ -5,10 +5,10 @@ import io.github.mmolosay.musicmind.theory.instruments.Instruments
 import io.github.mmolosay.musicmind.theory.tuning.DefaultPitchSequencer
 import io.github.mmolosay.musicmind.theory.tuning.PitchSequencer
 
-fun MusicContext(
+fun <I : Instrument> MusicContext(
     pitchSequencer: PitchSequencer = DefaultPitchSequencer(),
-    instrument: Instruments.() -> Instrument,
-): MusicContext {
+    instrument: Instruments.() -> I,
+): MusicContext<I> {
     val utils = MusicContext.Utils(
         pitchSequencer = pitchSequencer,
     )
