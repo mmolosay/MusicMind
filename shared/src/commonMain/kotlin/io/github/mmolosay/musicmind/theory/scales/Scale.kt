@@ -10,7 +10,7 @@ import io.github.mmolosay.musicmind.theory.pitch.Pitch
  * [Scale – Wikipedia](https://en.wikipedia.org/wiki/Scale_(music))
  */
 class Scale(
-    val tonic: Interval, // TODO: change: should not depend on instrument
+    val tonic: Pitch,
     override val intervals: List<Interval>,
 ) : AtonalScale {
 

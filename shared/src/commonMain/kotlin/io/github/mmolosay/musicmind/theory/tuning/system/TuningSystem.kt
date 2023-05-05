@@ -1,7 +1,7 @@
-package io.github.mmolosay.musicmind.theory.tuning
+package io.github.mmolosay.musicmind.theory.tuning.system
 
+import io.github.mmolosay.musicmind.theory.cents.Cents
 import io.github.mmolosay.musicmind.theory.intervals.Interval
-import io.github.mmolosay.musicmind.theory.intervals.asIntervals
 
 
 /**
@@ -24,14 +24,20 @@ sealed interface TuningSystem {
 
     val majorIntervals: List<Interval>
 
-    /**
-     * [Equal temperament – Wikipedia](https://en.wikipedia.org/wiki/Equal_temperament)
-     */
-    class EqualTemperament(
-        override val pitchClasses: Int,
-    ) : TuningSystem {
+    val step: Step
 
-        override val majorIntervals: List<Interval> =
-            listOf(2, 2, 1, 2, 2, 2, 1).asIntervals()
+    /**
+     * A step is the smallest interval between two adjacent notes.
+     *
+     * It is a neutral term that doesn't imply any particular size or tuning system.
+     * In 12-TET it is a semitone, while in other tuning systems it could be something else.
+     */
+    sealed interface Step {
+        class Constant(val size: Cents) : Step
+        class Variable(val producer: Producer) : Step
+
+        fun interface Producer {
+            fun nextNoteFrom(/*TODO: define a way of defining note*/): Cents
+        }
     }
 }

@@ -1,4 +1,4 @@
 package io.github.mmolosay.musicmind.theory.cents
 
-val Int.cents: Cents
+val Float.cents: Cents
     get() = Cents(amount = this)

@@ -13,7 +13,7 @@ package io.github.mmolosay.musicmind.theory.cents
  * [Wikipedia](https://en.wikipedia.org/wiki/Cent_(music))
  */
 @JvmInline
-value class Cents internal constructor(private val amount: Int) : Comparable<Cents> {
+value class Cents internal constructor(private val amount: Float) : Comparable<Cents> {
 
     operator fun plus(other: Cents): Cents =
         Cents(this.amount + other.amount)
@@ -21,10 +21,14 @@ value class Cents internal constructor(private val amount: Int) : Comparable<Cen
     operator fun minus(other: Cents): Cents =
         Cents(this.amount - other.amount)
 
+    operator fun div(other: Int): Cents =
+        Cents(this.amount / other)
+
     override fun compareTo(other: Cents): Int =
         this.amount.compareTo(other.amount)
 
     companion object {
-        val Zero: Cents = Cents(0)
+        val Zero by lazy { Cents(0f) }
+        val Octave by lazy { Cents(1200f) }
     }
 }

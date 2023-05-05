@@ -1,13 +1,18 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
-import io.github.mmolosay.musicmind.theory.pitch.PitchClass
-import io.github.mmolosay.musicmind.theory.tuning.TuningSystem
+import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
 
-interface Instrument {
-    val tuning: TuningSystem
-    val pitches: List<Pitch>
-    val pithClasses: List<PitchClass>
+/**
+ * An immutable abstraction of real-world musical instrument.
+ *
+ * Instrument is always tuned.
+ */
+sealed interface Instrument {
 
-    val Key.pitch: Pitch
+    val tuning: InstrumentTuning
+    val range: ClosedRange<Pitch>
+
+    val Pitch.exists: Boolean
+        get() = this in range
 }

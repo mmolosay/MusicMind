@@ -1,15 +1,32 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
-import io.github.mmolosay.musicmind.theory.tuning.TuningSystem
-import io.github.mmolosay.musicmind.theory.tuning.TuningSystems
+import io.github.mmolosay.musicmind.theory.context.MusicContext
+import io.github.mmolosay.musicmind.theory.tuning.PitchProducer
+import io.github.mmolosay.musicmind.theory.tuning.PitchSequencer
+import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
+import io.github.mmolosay.musicmind.theory.tuning.instrument.Tunings
+import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
+import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystems
 
-object Instruments {
+@Suppress("FunctionName")
+class Instruments(
+    private val utils: MusicContext.Utils,
+) {
 
     fun Piano(
-        tuning: TuningSystem = TuningSystems.EqualTemperament12Tone(),
+        pitchSequencer: PitchSequencer = utils.pitchSequencer,
+        tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
+        instrumentTuning: InstrumentTuning = Tunings.ConcertPiano(),
+        keys: Int = PianoFullSizeKeys,
     ): Instrument =
-        InstrumentImpl(
-            tuning = tuning,
-            keys = 88,
+        ChromaticInstrument(
+            keys = keys,
+            tuningSystem = tuningSystem,
+            tuning = instrumentTuning,
+            pitchProducer = PitchProducer(pitchSequencer),
         )
+
+    companion object {
+        private const val PianoFullSizeKeys = 88
+    }
 }
