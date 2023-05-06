@@ -46,11 +46,11 @@ class DefaultPitchSequencer : PitchSequencer {
         return List(strings) { i ->
             sequence {
                 val openString = tuning.openStrings[i]
-                yield(openString) // first is open string
                 val openStringFrequency = openString.frequency.toBigDecimal()
                 var ordinal = 1
-                while (true) { // and then its frets
-                    val multiplier = Constants.OctaveRatio.pow(ordinal / pitchClasses).toBigDecimal()
+                val pitchClasses = pitchClasses.toDouble()
+                while (true) {
+                    val multiplier = Constants.OctaveRatio.pow((ordinal - 1) / pitchClasses).toBigDecimal()
                     val hz = format.format(openStringFrequency * multiplier).toDouble()
                     yield(Pitch(hz))
                     ordinal++

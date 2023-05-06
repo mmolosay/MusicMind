@@ -94,7 +94,7 @@ class Instruments internal constructor(
             )
             val frets = KeyGroup.Multiple(
                 type = KeyGroup.Type.StringFrets,
-                keys = List(fretsPerString) { i -> (ordinal++ + i).key },
+                keys = List(fretsPerString) {ordinal++.key },
             )
             // TODO: resolve
 //            val flageolets = KeyGroup.Multiple(

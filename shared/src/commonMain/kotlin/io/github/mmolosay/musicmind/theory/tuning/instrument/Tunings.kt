@@ -19,9 +19,9 @@ object Tunings {
         fifthString: Pitch,
         sixthString: Pitch,
     ): FretboardTuning =
-        FretboardTuning(
-            openStrings = listOf(firstString, secondString, thirdString, fourthString, fifthString, sixthString),
-        )
+        listOf(firstString, secondString, thirdString, fourthString, fifthString, sixthString)
+            .asReversed() // we want first guitar's key to be an open sixth string, not the first one
+            .asFretboardTuning()
 
     object Guitar {
 
