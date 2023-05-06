@@ -30,8 +30,8 @@ abstract class AbstractDiscretePitchInstrument(
     override val Note.exists: Boolean
         get() = notes.contains(this)
 
-    override fun List<Note>.atKey(predicate: (Key) -> Boolean): Note =
-        first { predicate(it.key) }
+    override fun noteAt(key: Key): Note =
+        notes.first { it.key == key }
 
     protected operator fun Note.plus(distance: Distance): Note? =
         notes.getOrNull(notes.indexOf(this) + distance.steps)

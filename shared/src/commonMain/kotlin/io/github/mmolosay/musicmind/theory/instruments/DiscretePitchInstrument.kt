@@ -21,7 +21,7 @@ interface DiscretePitchInstrument : Instrument {
 
     val Note.exists: Boolean
 
-    fun List<Note>.atKey(predicate: (Key) -> Boolean): Note
+    fun noteAt(key: Key): Note
 
     fun Note.scale(partition: OctavePartition): FiniteNoteScale?
 
@@ -41,7 +41,7 @@ interface DiscretePitchInstrument : Instrument {
      * A strategy of obtaining a set of all instrument's keys in correct order is provided by the instrument itself.
      */
     @JvmInline
-    value class Key(val ordinal: Int) : Comparable<Key> {
+    value class Key internal constructor(val ordinal: Int) : Comparable<Key> {
 
         init {
             require(ordinal > 0) { "Key ordinal must be greater than zero" }
@@ -51,3 +51,10 @@ interface DiscretePitchInstrument : Instrument {
             this.ordinal.compareTo(other.ordinal)
     }
 }
+
+// region Key
+
+val Int.key: DiscretePitchInstrument.Key
+    get() = DiscretePitchInstrument.Key(ordinal = this)
+
+// endregion
