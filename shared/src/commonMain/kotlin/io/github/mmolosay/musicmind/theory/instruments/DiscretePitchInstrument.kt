@@ -1,5 +1,7 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
+import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Key
+import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Note
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
@@ -20,8 +22,6 @@ interface DiscretePitchInstrument : Instrument {
     val pitchClasses: List<PitchClass>
 
     val Note.exists: Boolean
-
-    fun noteAt(key: Key): Note
 
     fun Note.scale(partition: OctavePartition): FiniteNoteScale?
 
@@ -52,9 +52,19 @@ interface DiscretePitchInstrument : Instrument {
     }
 }
 
-// region Key
+// region DiscretePitchInstrument extensions
 
-val Int.key: DiscretePitchInstrument.Key
-    get() = DiscretePitchInstrument.Key(ordinal = this)
+infix fun DiscretePitchInstrument.canProduce(pitch: Pitch): Boolean =
+    notes.any { it.pitch == pitch }
+
+infix fun DiscretePitchInstrument.noteAt(key: Key): Note =
+    notes.first { it.key == key }
+
+// endregion
+
+// region Key extensions
+
+val Int.key: Key
+    get() = Key(ordinal = this)
 
 // endregion
