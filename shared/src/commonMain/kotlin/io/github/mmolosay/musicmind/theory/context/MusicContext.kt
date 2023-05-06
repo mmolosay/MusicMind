@@ -12,6 +12,7 @@ interface MusicContext<out I : Instrument> {
     val utils: Utils
     val instrument: I
 
+    // TODO: abolish?
     data class Utils(
         val pitchSequencer: PitchSequencer,
         val pitchClassifier: PitchClassifier,

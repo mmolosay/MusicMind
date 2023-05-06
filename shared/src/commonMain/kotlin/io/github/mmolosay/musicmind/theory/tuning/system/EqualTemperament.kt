@@ -1,7 +1,9 @@
 package io.github.mmolosay.musicmind.theory.tuning.system
 
+import io.github.mmolosay.musicmind.theory.Constants
 import io.github.mmolosay.musicmind.theory.cents.Cents
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem.Step
+import kotlin.math.pow
 
 /**
  * [Equal temperament – Wikipedia](https://en.wikipedia.org/wiki/Equal_temperament)
@@ -31,3 +33,6 @@ class EqualTemperament(
         const val HalfStep = FullStep / 2
     }
 }
+
+val EqualTemperament.oneStepRatio: Double
+    get() = Constants.OctaveRatio.pow(1.0 / pitchClasses) // pitchClasses-th root of 2 (octave ratio)

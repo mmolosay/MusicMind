@@ -2,7 +2,7 @@ package io.github.mmolosay.musicmind.theory.tuning.instrument
 
 import java.math.BigDecimal
 
-data class PianoTuning(
+data class KeyboardTuning(
     val a4Frequency: BigDecimal,
 ) : InstrumentTuning {
 

@@ -1,11 +1,12 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
-import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Key
-import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Note
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Keys
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
-import io.github.mmolosay.musicmind.theory.scales.FiniteNoteScale
+import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
+import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 
 /**
@@ -16,14 +17,15 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
  */
 interface DiscretePitchInstrument : Instrument {
 
-    val keys: Int
+    val keys: Keys
     val tuningSystem: TuningSystem
-    val notes: List<Note>
+    val notes: Map<Key, Pitch> //
     val pitchClasses: List<PitchClass>
 
-    val Note.exists: Boolean
+    val Key.exists: Boolean
 
-    fun Note.scale(partition: OctavePartition): FiniteNoteScale?
+    infix fun Key.scale(partition: OctavePartition): FiniteKeyScale?
+    fun FiniteKeyScale.pitches(): FinitePitchScale
 
     data class Note internal constructor(
         val key: Key,
@@ -34,37 +36,4 @@ interface DiscretePitchInstrument : Instrument {
             this.key.compareTo(other.key)
     }
 
-    /**
-     * Represents a specific physical position on an instrument.
-     * It is a key on a piano and fret of string on a guitar.
-     *
-     * A strategy of obtaining a set of all instrument's keys in correct order is provided by the instrument itself.
-     */
-    @JvmInline
-    value class Key internal constructor(val ordinal: Int) : Comparable<Key> {
-
-        init {
-            require(ordinal > 0) { "Key ordinal must be greater than zero" }
-        }
-
-        override fun compareTo(other: Key): Int =
-            this.ordinal.compareTo(other.ordinal)
-    }
 }
-
-// region DiscretePitchInstrument extensions
-
-infix fun DiscretePitchInstrument.canProduce(pitch: Pitch): Boolean =
-    notes.any { it.pitch == pitch }
-
-infix fun DiscretePitchInstrument.noteAt(key: Key): Note =
-    notes.first { it.key == key }
-
-// endregion
-
-// region Key extensions
-
-val Int.key: Key
-    get() = Key(ordinal = this)
-
-// endregion

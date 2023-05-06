@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 
 /**
@@ -14,14 +14,13 @@ import io.github.mmolosay.musicmind.theory.pitch.Pitch
  *
  * [Scale — Wikipedia](https://en.wikipedia.org/wiki/Scale_(music))
  */
-@JvmInline
-value class FiniteScale<out T>(val entries: List<T>)
+class FiniteScale<out T>(entries: List<T>) : List<T> by entries
 
-internal val EmptyFiniteScale: FiniteScale<Nothing> = FiniteScale(listOf())
+internal val EmptyFiniteScale: FiniteScale<Nothing> = FiniteScale(emptyList())
 
 val <T> FiniteScale<T>.tonic: T
-    get() = entries.first()
+    get() = first()
 
 typealias FinitePitchScale = FiniteScale<Pitch>
 
-typealias FiniteNoteScale = FiniteScale<DiscretePitchInstrument.Note>
+typealias FiniteKeyScale = FiniteScale<Key>

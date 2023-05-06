@@ -14,6 +14,7 @@ class DefaultTuner : Tuner {
         when (this) {
             is DiscretePitchInstrument -> tune(tuning)
             is ContinuousPitchInstrument -> tune(tuning)
+            else -> error("prevent occasional compiler's error")
         }
 
     private fun DiscretePitchInstrument.tune(tuning: InstrumentTuning): DiscretePitchInstrument =

@@ -5,6 +5,7 @@ import io.github.mmolosay.musicmind.theory.instruments.Instruments
 import io.github.mmolosay.musicmind.theory.pitch.DefaultPitchClassifier
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
 import io.github.mmolosay.musicmind.theory.tuning.DefaultPitchSequencer
+import io.github.mmolosay.musicmind.theory.tuning.KeysTuner
 import io.github.mmolosay.musicmind.theory.tuning.PitchSequencer
 
 fun <I : Instrument> MusicContext(
@@ -18,6 +19,9 @@ fun <I : Instrument> MusicContext(
     )
     return MusicContextImpl(
         utils = utils,
-        instrument = Instruments(utils).instrument(),
+        instrument = Instruments(
+            defaultKeysTuner = KeysTuner(pitchSequencer),
+            defaultPitchClassifier = pitchClassifier,
+        ).instrument(),
     )
 }
