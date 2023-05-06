@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.pitch
 
-object DefaultPitchClassifier : PitchClassifier {
+class DefaultPitchClassifier : PitchClassifier {
 
     override fun List<Pitch>.classes(): List<PitchClass> {
         val count = countClasses()

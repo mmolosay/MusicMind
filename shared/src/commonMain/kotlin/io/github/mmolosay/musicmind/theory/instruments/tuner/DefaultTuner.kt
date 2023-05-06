@@ -1,10 +1,12 @@
 package io.github.mmolosay.musicmind.theory.instruments.tuner
 
-import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.ContinuousPitchInstrument
+import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.Instrument
 import io.github.mmolosay.musicmind.theory.instruments.discrete.DiscretePitchInstrumentImpl
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
+
+// TODO: refactor List<Pitch> and List<Note> to always have a tuning system provided along
 
 class DefaultTuner : Tuner {
 

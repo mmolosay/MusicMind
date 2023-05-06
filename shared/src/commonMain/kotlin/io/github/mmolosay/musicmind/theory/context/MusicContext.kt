@@ -1,6 +1,7 @@
 package io.github.mmolosay.musicmind.theory.context
 
 import io.github.mmolosay.musicmind.theory.instruments.Instrument
+import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
 import io.github.mmolosay.musicmind.theory.tuning.PitchSequencer
 
 /**
@@ -13,5 +14,6 @@ interface MusicContext<out I : Instrument> {
 
     data class Utils(
         val pitchSequencer: PitchSequencer,
+        val pitchClassifier: PitchClassifier,
     )
 }

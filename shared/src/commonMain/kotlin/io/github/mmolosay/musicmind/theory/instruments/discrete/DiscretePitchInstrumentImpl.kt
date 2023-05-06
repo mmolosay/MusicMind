@@ -4,6 +4,7 @@ import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.K
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument.Note
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.partition.verify
+import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
 import io.github.mmolosay.musicmind.theory.scales.FiniteNoteScale
 import io.github.mmolosay.musicmind.theory.tuning.PitchProducer
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
@@ -14,7 +15,8 @@ data class DiscretePitchInstrumentImpl internal constructor(
     override val tuningSystem: TuningSystem,
     override val tuning: InstrumentTuning,
     private val pitchProducer: PitchProducer,
-) : AbstractDiscretePitchInstrument() {
+    private val pitchClassifier: PitchClassifier,
+) : AbstractDiscretePitchInstrument(pitchClassifier) {
 
     override val notes by lazy {
         with(pitchProducer) { pitches() }

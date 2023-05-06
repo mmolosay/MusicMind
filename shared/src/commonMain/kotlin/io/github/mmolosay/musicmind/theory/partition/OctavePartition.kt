@@ -32,9 +32,10 @@ fun TuningSystem.verify(partition: OctavePartition) {
 }
 
 infix fun OctavePartition.over(mode: Mode): OctavePartition {
+    // TODO: tweak function when Modes can calculate their partitions
     require(isHeptatonic) { "Only heptatonic partitions may be used in modal interchange" }
+    if (mode == Mode.Ionian) return this // TODO: remove this with todo above; used for now because Ionian will do nothing
     return distribution.run {
-        // TODO: tweak function when Modes can calculate their partitions
         OctavePartition(subList(mode.degree, size) + subList(0, mode.degree))
     }
 }

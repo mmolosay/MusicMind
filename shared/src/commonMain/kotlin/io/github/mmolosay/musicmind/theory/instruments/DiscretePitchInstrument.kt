@@ -2,6 +2,7 @@ package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
+import io.github.mmolosay.musicmind.theory.pitch.PitchClass
 import io.github.mmolosay.musicmind.theory.scales.FiniteNoteScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 
@@ -16,6 +17,7 @@ interface DiscretePitchInstrument : Instrument {
     val keys: Int
     val tuningSystem: TuningSystem
     val notes: List<Note>
+    val pitchClasses: List<PitchClass>
 
     val Note.exists: Boolean
 
