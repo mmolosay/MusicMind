@@ -23,6 +23,7 @@ interface DiscretePitchInstrument : Instrument {
     val pitchClasses: List<PitchClass>
 
     val Key.exists: Boolean
+    val Key.pitch: Pitch
 
     infix fun Key.scale(partition: OctavePartition): FiniteKeyScale?
     fun FiniteKeyScale.pitches(): FinitePitchScale

@@ -33,7 +33,7 @@ abstract class AbstractDiscretePitchInstrument(
     override val Key.exists: Boolean
         get() = ordinal <= keys.total
 
-    protected val Key.pitch: Pitch
+    override val Key.pitch: Pitch
         get() = notes.getValue(this)
 
     override fun FiniteKeyScale.pitches(): FinitePitchScale =
