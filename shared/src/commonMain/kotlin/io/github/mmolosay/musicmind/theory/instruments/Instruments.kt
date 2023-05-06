@@ -87,11 +87,11 @@ class Instruments internal constructor(
             fretsPerString: Int,
             flageoletsPerString: Int,
         ): FretboardKeys.KeySet {
-            var ordinal = lastKeyOrdinal
+            var ordinal = lastKeyOrdinal + 1
             val openString = KeyGroup.Single(
                 type = KeyGroup.Type.StringOpen,
                 key = ordinal++.key,
-            ) // TODO: chech that increments BEFORE making a key
+            )
             val frets = KeyGroup.Multiple(
                 type = KeyGroup.Type.StringFrets,
                 keys = List(fretsPerString) { i -> (ordinal++ + i).key },
