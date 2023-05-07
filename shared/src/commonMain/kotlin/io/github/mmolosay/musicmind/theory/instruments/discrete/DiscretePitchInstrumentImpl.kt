@@ -18,8 +18,8 @@ data class DiscretePitchInstrumentImpl internal constructor(
     val pitchClassifier: PitchClassifier,
 ) : AbstractDiscretePitchInstrument(pitchClassifier) {
 
-    override fun Key.scale(partition: OctavePartition): FiniteKeyScale? {
-        if (!exists) return null
+    override fun Key.scale(partition: OctavePartition): FiniteKeyScale {
+        assertExists()
         tuningSystem.verify(partition)
         val keys = mutableListOf(this)
         var lastKey = this

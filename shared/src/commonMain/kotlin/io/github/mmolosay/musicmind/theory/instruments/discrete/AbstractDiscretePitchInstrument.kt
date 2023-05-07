@@ -39,6 +39,10 @@ abstract class AbstractDiscretePitchInstrument(
     override fun FiniteKeyScale.pitches(): FinitePitchScale =
         FinitePitchScale(map { it.pitch })
 
+    protected fun Key.assertExists() {
+        require(exists) { "Key $this does not exist in this instrument" }
+    }
+
     protected operator fun Key.plus(distance: Distance): Key? {
         val resultOrdinal = this.ordinal + distance.steps
         return resultOrdinal.key.takeIf { it.exists }
