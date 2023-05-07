@@ -1,6 +1,7 @@
 package io.github.mmolosay.musicmind.theory.pitch
 
-import io.github.mmolosay.musicmind.theory.Constants
+import io.github.mmolosay.musicmind.theory.Constants.OctaveRatio
+import io.github.mmolosay.musicmind.theory.Constants.PitchEqualityThreshold
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.math.ln
@@ -52,14 +53,14 @@ val Int.hz: Pitch
     get() = Pitch(frequency = this.toDouble())
 
 val Pitch.octaveHigher: Pitch
-    get() = this * Constants.OctaveRatio
+    get() = this * OctaveRatio
 
 val Pitch.isHumanPercievable: Boolean
     get() = this >= Pitch.HumanPercievableLowest && this <= Pitch.HumanPercievableHighest
 
 fun Pitch.transpose(octaves: Int): Pitch =
     if (octaves == 0) this
-    else this * Constants.OctaveRatio.pow(octaves)
+    else this * OctaveRatio.pow(octaves)
 
 infix fun Pitch.isPercievablyEqualTo(other: Pitch): Boolean =
     (this.frequency - other.frequency).absoluteValue < PitchEqualityThreshold
@@ -71,5 +72,4 @@ infix fun Pitch.isOfSamePitchClassAs(other: Pitch): Boolean {
     return (diff < PitchEqualityThreshold)
 }
 
-private const val PitchEqualityThreshold = 2e-5
 private val Log2 = ln(2.0)
