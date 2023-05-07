@@ -7,7 +7,7 @@ import io.github.mmolosay.musicmind.theory.result
 import io.github.mmolosay.musicmind.theory.to
 import kotlin.math.log2
 
-/*internal*/ enum class PureInterval(
+internal enum class PureInterval(
     val ratio: Ratio,
     val stability: Stability,
 ) {
@@ -66,6 +66,7 @@ import kotlin.math.log2
     ),
     ;
 
-    val cents: Cents
-        get() = Cents.Octave * log2(ratio.result)
+    val cents: Cents by lazy {
+        Cents.Octave * log2(ratio.result)
+    }
 }

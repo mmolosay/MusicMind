@@ -33,6 +33,6 @@ data class DiscretePitchInstrumentImpl<out K : Keys> internal constructor(
                 break
             }
         }
-        return FiniteKeyScale(entries = keys)
+        return FiniteKeyScale(keys = keys)
     }
 }

@@ -1,7 +1,7 @@
 package io.github.mmolosay.musicmind.theory.tuning.system
 
 import io.github.mmolosay.musicmind.theory.cents.Cents
-import io.github.mmolosay.musicmind.theory.intervals.Interval
+import io.github.mmolosay.musicmind.theory.scales.FiniteIntervalScale
 
 
 /**
@@ -11,9 +11,9 @@ import io.github.mmolosay.musicmind.theory.intervals.Interval
  * A __musical temperament__ is a tuning system that slightly compromises the pure intervals
  * of "just intonation" to meet other requirements.
  *
- * Definition of major scale interval-wise is different for each tuning system: changing distribution of notes affects
+ * Definition of Ionian scale interval-wise differs for each tuning system: changing distribution of notes affects
  * minimal step of system (i.e. semitone for 12-TET). That changes amount of steps that an octave is split in, and thus
- * intervals of major scale.
+ * intervals of the scale.
  *
  * [Tuning systems – Wikipedia](https://en.wikipedia.org/wiki/Musical_tuning#Tuning_systems)
  * [Musical temperament – Wikipedia](https://en.wikipedia.org/wiki/Musical_temperament)
@@ -22,7 +22,7 @@ sealed interface TuningSystem {
 
     val pitchClasses: Int
 
-    val majorIntervals: List<Interval>
+    val ionianScale: FiniteIntervalScale
 
     val step: Step
 
@@ -33,7 +33,7 @@ sealed interface TuningSystem {
      * In 12-TET it is a semitone, while in other tuning systems it could be something else.
      */
     sealed interface Step {
-        class Constant(val size: Cents) : Step
+        class Constant(val cents: Cents) : Step
         class Variable(val producer: Producer) : Step
 
         fun interface Producer {
