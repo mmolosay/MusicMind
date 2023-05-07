@@ -1,15 +1,16 @@
 package io.github.mmolosay.musicmind.theory.intervals
 
 import io.github.mmolosay.musicmind.theory.Ratio
+import io.github.mmolosay.musicmind.theory.cents.Cents
 import io.github.mmolosay.musicmind.theory.perception.Stability
+import io.github.mmolosay.musicmind.theory.result
 import io.github.mmolosay.musicmind.theory.to
+import kotlin.math.log2
 
-// TODO: provided intervals are pure.
-//      actual, accurate ratio is defined by TuningSystem
-enum class Intervals(
-    override val ratio: Ratio,
-    override val stability: Stability,
-) : IntervalOld {
+/*internal*/ enum class PureInterval(
+    val ratio: Ratio,
+    val stability: Stability,
+) {
 
     Unison(
         ratio = 1 to 1,
@@ -64,4 +65,7 @@ enum class Intervals(
         stability = Stability.PerfectConsonance,
     ),
     ;
+
+    val cents: Cents
+        get() = Cents.Octave * log2(ratio.result)
 }

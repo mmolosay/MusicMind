@@ -21,6 +21,9 @@ value class Cents internal constructor(private val amount: Float) : Comparable<C
     operator fun minus(other: Cents): Cents =
         Cents(this.amount - other.amount)
 
+    operator fun times(other: Float): Cents =
+        Cents(this.amount * other)
+
     operator fun div(other: Int): Cents =
         Cents(this.amount / other)
 
