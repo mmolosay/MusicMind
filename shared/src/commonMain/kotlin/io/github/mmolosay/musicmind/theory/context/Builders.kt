@@ -20,7 +20,7 @@ fun <I : Instrument> MusicContext(
     return MusicContextImpl(
         utils = utils,
         instrument = Instruments(
-            defaultKeysTuner = KeysTuner(pitchSequencer),
+            keysTuner = KeysTuner(pitchSequencer),
             defaultPitchClassifier = pitchClassifier,
         ).instrument(),
     )

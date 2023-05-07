@@ -13,7 +13,7 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystems
 
 @Suppress("FunctionName")
 class Instruments internal constructor(
-    private val defaultKeysTuner: KeysTuner,
+    private val keysTuner: KeysTuner,
     private val defaultPitchClassifier: PitchClassifier,
 ) {
 
@@ -21,14 +21,12 @@ class Instruments internal constructor(
         keys: Int = DefaultPianoKeys,
         tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
         instrumentTuning: KeyboardTuning = Tunings.ConcertPiano(),
-        keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
     ): DiscretePitchInstrument<KeyboardKeys> =
         Piano(
             keys = KeysFactory.Keyboard(keys),
             tuningSystem = tuningSystem,
             instrumentTuning = instrumentTuning,
-            keysTuner = keysTuner,
             pitchClassifier = pitchClassifier,
         )
 
@@ -36,18 +34,15 @@ class Instruments internal constructor(
         keys: KeyboardKeys,
         tuningSystem: TuningSystem,
         instrumentTuning: KeyboardTuning,
-        keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<KeyboardKeys> {
-        val notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) }
-        return DiscretePitchInstrumentImpl(
+    ): DiscretePitchInstrument<KeyboardKeys> =
+        DiscretePitchInstrumentImpl(
             keys = keys,
-            notes = notes,
+            notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) },
             tuningSystem = tuningSystem,
             tuning = instrumentTuning,
             pitchClassifier = pitchClassifier,
         )
-    }
 
     fun Guitar(
         strings: Int = DefaultGuitarStrings,
@@ -55,14 +50,12 @@ class Instruments internal constructor(
         flageoletsPerString: Int = DefaultGuitarFlageoletsPerString,
         tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
         instrumentTuning: FretboardTuning = Tunings.Guitar.StandardTuning,
-        keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
     ): DiscretePitchInstrument<FretboardKeys> =
         Guitar(
             keys = KeysFactory.Fretboard(strings, fretsPerString, flageoletsPerString),
             tuningSystem = tuningSystem,
             instrumentTuning = instrumentTuning,
-            keysTuner = keysTuner,
             pitchClassifier = pitchClassifier,
         )
 
@@ -70,18 +63,15 @@ class Instruments internal constructor(
         keys: FretboardKeys,
         tuningSystem: TuningSystem,
         instrumentTuning: FretboardTuning,
-        keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<FretboardKeys> {
-        val notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) }
-        return DiscretePitchInstrumentImpl(
+    ): DiscretePitchInstrument<FretboardKeys> =
+        DiscretePitchInstrumentImpl(
             keys = keys,
-            notes = notes,
+            notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) },
             tuningSystem = tuningSystem,
             tuning = instrumentTuning,
             pitchClassifier = pitchClassifier,
         )
-    }
 
     companion object {
         private const val DefaultPianoKeys = 88

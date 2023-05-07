@@ -14,7 +14,7 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
  * Associates provided keys with pitches from [pitchSequencer].
  */
 // TODO: just Tuner?
-class KeysTuner(
+internal class KeysTuner(
     private val pitchSequencer: PitchSequencer,
 ) {
 
