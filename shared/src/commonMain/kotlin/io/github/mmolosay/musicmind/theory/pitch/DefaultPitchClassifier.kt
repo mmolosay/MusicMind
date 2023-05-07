@@ -16,7 +16,7 @@ class DefaultPitchClassifier : PitchClassifier {
         if (size == 1) return 1
         val end = first().octaveHigher
         var i = 1
-        while (!(get(i) isOfSamePitchClassAs end) && i != lastIndex) i++
+        while (!get(i).isOfSamePitchClassAs(end) && i != lastIndex) i++
         return i
     }
 }
