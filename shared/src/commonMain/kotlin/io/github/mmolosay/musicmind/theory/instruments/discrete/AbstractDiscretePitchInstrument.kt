@@ -2,6 +2,7 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete
 
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Keys
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.key
 import io.github.mmolosay.musicmind.theory.partition.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
@@ -14,9 +15,9 @@ import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
  * Abstract implementation of [DiscretePitchInstrument] that defines some of its fields and methods.
  * Use this component in order to create custom implementation of [DiscretePitchInstrument].
  */
-abstract class AbstractDiscretePitchInstrument(
+abstract class AbstractDiscretePitchInstrument<out K : Keys>(
     pitchClassifier: PitchClassifier,
-) : DiscretePitchInstrument {
+) : DiscretePitchInstrument<K> {
 
     override val range: ClosedRange<Pitch> by lazy {
         notes.values.min()..notes.values.max()

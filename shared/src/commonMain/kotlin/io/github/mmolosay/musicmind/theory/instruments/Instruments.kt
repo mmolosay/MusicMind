@@ -2,10 +2,7 @@ package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.instruments.discrete.DiscretePitchInstrumentImpl
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys
-import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys.KeyGroup
-import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.KeyboardKeys
-import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.key
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
 import io.github.mmolosay.musicmind.theory.tuning.KeysTuner
 import io.github.mmolosay.musicmind.theory.tuning.instrument.FretboardTuning
@@ -26,11 +23,25 @@ class Instruments internal constructor(
         instrumentTuning: KeyboardTuning = Tunings.ConcertPiano(),
         keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument {
-        val keyboardKeys = Keys.Keyboard(size = keys)
-        val notes = with(keysTuner) { keyboardKeys.tune(tuningSystem, instrumentTuning) }
+    ): DiscretePitchInstrument<KeyboardKeys> =
+        Piano(
+            keys = KeysFactory.Keyboard(keys),
+            tuningSystem = tuningSystem,
+            instrumentTuning = instrumentTuning,
+            keysTuner = keysTuner,
+            pitchClassifier = pitchClassifier,
+        )
+
+    fun Piano(
+        keys: KeyboardKeys,
+        tuningSystem: TuningSystem,
+        instrumentTuning: KeyboardTuning,
+        keysTuner: KeysTuner = defaultKeysTuner,
+        pitchClassifier: PitchClassifier = defaultPitchClassifier,
+    ): DiscretePitchInstrument<KeyboardKeys> {
+        val notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) }
         return DiscretePitchInstrumentImpl(
-            keys = keyboardKeys,
+            keys = keys,
             notes = notes,
             tuningSystem = tuningSystem,
             tuning = instrumentTuning,
@@ -46,63 +57,30 @@ class Instruments internal constructor(
         instrumentTuning: FretboardTuning = Tunings.Guitar.StandardTuning,
         keysTuner: KeysTuner = defaultKeysTuner,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument {
-        val fretboardKeys = Keys.Fretboard(strings, fretsPerString, flageoletsPerString)
-        val notes = with(keysTuner) { fretboardKeys.tune(tuningSystem, instrumentTuning) }
+    ): DiscretePitchInstrument<FretboardKeys> =
+        Guitar(
+            keys = KeysFactory.Fretboard(strings, fretsPerString, flageoletsPerString),
+            tuningSystem = tuningSystem,
+            instrumentTuning = instrumentTuning,
+            keysTuner = keysTuner,
+            pitchClassifier = pitchClassifier,
+        )
+
+    fun Guitar(
+        keys: FretboardKeys,
+        tuningSystem: TuningSystem,
+        instrumentTuning: FretboardTuning,
+        keysTuner: KeysTuner = defaultKeysTuner,
+        pitchClassifier: PitchClassifier = defaultPitchClassifier,
+    ): DiscretePitchInstrument<FretboardKeys> {
+        val notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) }
         return DiscretePitchInstrumentImpl(
-            keys = fretboardKeys,
+            keys = keys,
             notes = notes,
             tuningSystem = tuningSystem,
             tuning = instrumentTuning,
             pitchClassifier = pitchClassifier,
         )
-    }
-
-    object Keys {
-
-        fun Keyboard(size: Int): KeyboardKeys =
-            KeyboardKeys(
-                all = List(size) { i -> Key(ordinal = i + 1) },
-            )
-
-        fun Fretboard(
-            strings: Int,
-            fretsPerString: Int,
-            flageoletsPerString: Int,
-        ): FretboardKeys =
-            FretboardKeys(
-                strings = buildList {
-                    repeat(times = strings) {
-                        makeFretboardStringKeys(
-                            startOrdinal = lastOrNull()?.lastOrNull()?.last()?.ordinal ?: 0,
-                            fretsPerString = fretsPerString,
-                            flageoletsPerString = flageoletsPerString,
-                        ).also { add(it) }
-                    }
-                },
-            )
-
-        private fun makeFretboardStringKeys(
-            startOrdinal: Int,
-            fretsPerString: Int,
-            flageoletsPerString: Int,
-        ): FretboardKeys.StringKeys {
-            var ordinal = startOrdinal + 1
-            val openString = KeyGroup(
-                type = KeyGroup.Type.OpenString,
-                key = ordinal++.key,
-            )
-            val frets = KeyGroup(
-                type = KeyGroup.Type.StringFrets,
-                keys = List(fretsPerString) { ordinal++.key },
-            )
-            // TODO: resolve
-//            val flageolets = KeyGroup.Multiple(
-//                type = KeyGroup.Type.StringFlageolets,
-//                keys = List(flageoletsPerString) { i -> (ordinal++ + i).key },
-//            )
-            return FretboardKeys.StringKeys(listOf(openString, frets/*, flageolets*/))
-        }
     }
 
     companion object {
