@@ -3,6 +3,7 @@ package io.github.mmolosay.musicmind.theory.instruments
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.KeyboardKeys
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.StringKeys
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.key
 
 @Suppress("FunctionName")
@@ -34,7 +35,7 @@ object KeysFactory {
         startOrdinal: Int,
         fretsPerString: Int,
         flageoletsPerString: Int,
-    ): FretboardKeys.StringKeys {
+    ): StringKeys {
         var ordinal = startOrdinal + 1
         val openString = FretboardKeys.KeyGroup(
             type = FretboardKeys.KeyGroup.Type.OpenString,
@@ -49,6 +50,6 @@ object KeysFactory {
 //                type = KeyGroup.Type.StringFlageolets,
 //                keys = List(flageoletsPerString) { i -> (ordinal++ + i).key },
 //            )
-        return FretboardKeys.StringKeys(listOf(openString, frets/*, flageolets*/))
+        return listOf(openString, frets/*, flageolets*/)
     }
 }

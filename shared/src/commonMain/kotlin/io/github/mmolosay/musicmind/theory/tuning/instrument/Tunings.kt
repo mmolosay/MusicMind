@@ -20,7 +20,6 @@ object Tunings {
         sixthString: Pitch,
     ): FretboardTuning =
         listOf(firstString, secondString, thirdString, fourthString, fifthString, sixthString)
-            .asReversed() // we want first guitar's key to be an open sixth string, not the first one
             .asFretboardTuning()
 
     object Guitar {
