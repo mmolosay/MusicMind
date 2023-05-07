@@ -71,10 +71,10 @@ class Instruments internal constructor(
             flageoletsPerString: Int,
         ): FretboardKeys =
             FretboardKeys(
-                sets = buildList {
+                strings = buildList {
                     repeat(times = strings) {
-                        makeFretboardKeySet(
-                            lastKeyOrdinal = lastOrNull()?.lastOrNull()?.last()?.ordinal ?: 0,
+                        makeFretboardStringKeys(
+                            startOrdinal = lastOrNull()?.lastOrNull()?.last()?.ordinal ?: 0,
                             fretsPerString = fretsPerString,
                             flageoletsPerString = flageoletsPerString,
                         ).also { add(it) }
@@ -82,26 +82,26 @@ class Instruments internal constructor(
                 },
             )
 
-        private fun makeFretboardKeySet(
-            lastKeyOrdinal: Int,
+        private fun makeFretboardStringKeys(
+            startOrdinal: Int,
             fretsPerString: Int,
             flageoletsPerString: Int,
-        ): FretboardKeys.KeySet {
-            var ordinal = lastKeyOrdinal + 1
-            val openString = KeyGroup.Single(
-                type = KeyGroup.Type.StringOpen,
+        ): FretboardKeys.StringKeys {
+            var ordinal = startOrdinal + 1
+            val openString = KeyGroup(
+                type = KeyGroup.Type.OpenString,
                 key = ordinal++.key,
             )
-            val frets = KeyGroup.Multiple(
+            val frets = KeyGroup(
                 type = KeyGroup.Type.StringFrets,
-                keys = List(fretsPerString) {ordinal++.key },
+                keys = List(fretsPerString) { ordinal++.key },
             )
             // TODO: resolve
 //            val flageolets = KeyGroup.Multiple(
 //                type = KeyGroup.Type.StringFlageolets,
 //                keys = List(flageoletsPerString) { i -> (ordinal++ + i).key },
 //            )
-            return FretboardKeys.KeySet(listOf(openString, frets /*flageolets*/))
+            return FretboardKeys.StringKeys(listOf(openString, frets/*, flageolets*/))
         }
     }
 

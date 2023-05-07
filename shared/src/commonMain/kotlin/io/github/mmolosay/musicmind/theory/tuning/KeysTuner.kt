@@ -56,7 +56,7 @@ class KeysTuner(
         fretboardTuning: FretboardTuning,
     ): Map<Key, Pitch> {
         val sequences = with(pitchSequencer) { equalTemperament + fretboardTuning }
-        return sets
+        return strings
             .map { set -> set.flatten() }.zip(sequences)
             .flatMap { (keys, sequence) -> keys.zip(sequence.take(keys.size).toList()) }
             .toMap()

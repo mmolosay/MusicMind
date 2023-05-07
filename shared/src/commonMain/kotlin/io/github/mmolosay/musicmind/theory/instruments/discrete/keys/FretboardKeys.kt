@@ -2,44 +2,30 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 
 @JvmInline
 value class FretboardKeys internal constructor(
-    val sets: List<KeySet>,
+    val strings: List<StringKeys>,
 ) : Keys {
 
     override val total: Int
-        get() = sets.sumOf { it.total }
+        get() = strings.sumOf { it.total }
 
-    class KeySet(list: List<KeyGroup>) : List<KeyGroup> by list
+    class StringKeys(groups: List<KeyGroup>) : List<KeyGroup> by groups {
+        // TODO: ordinal?
+    }
 
-    sealed interface KeyGroup : List<Key> {
+    class KeyGroup(
+        val type: Type,
+        keys: List<Key>,
+    ) : List<Key> by keys {
 
-        val type: Type
-
-        class Single internal constructor(
-            override val type: Type,
-            val key: Key,
-        ) : AbstractList<Key>(), KeyGroup {
-            override val size: Int = 1
-            override fun get(index: Int): Key = key
-        }
-
-        class Multiple internal constructor(
-            override val type: Type,
-            val keys: List<Key>,
-        ) : List<Key> by keys, KeyGroup
+        constructor(type: Type, key: Key) : this(type, listOf(key))
 
         enum class Type {
-            StringOpen,
+            OpenString,
             StringFrets,
             StringFlageolets,
         }
     }
 
-    val KeySet.total: Int
-        get() = sumOf { group -> group.total }
-
-    val KeyGroup.total: Int
-        get() = when (this) {
-            is KeyGroup.Single -> 1
-            is KeyGroup.Multiple -> keys.size
-        }
+    val StringKeys.total: Int
+        get() = sumOf { it.size }
 }
