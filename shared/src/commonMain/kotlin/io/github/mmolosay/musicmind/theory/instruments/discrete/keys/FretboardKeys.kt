@@ -1,5 +1,7 @@
 package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys.KeyGroup
+
 @JvmInline
 value class FretboardKeys internal constructor(
     val strings: Strings,
@@ -28,4 +30,25 @@ value class FretboardKeys internal constructor(
 
 typealias Strings = List<StringKeys>
 
-typealias StringKeys = List<FretboardKeys.KeyGroup>
+typealias StringKeys = List<KeyGroup>
+
+// region Selectors
+
+fun FretboardKeys.string(ordinal: Int): StringKeys =
+    strings[ordinal - 1]
+
+fun StringKeys.of(type: KeyGroup.Type): KeyGroup =
+    first { it.type == type }
+
+fun StringKeys.open(): Key =
+    this
+        .of(KeyGroup.Type.OpenString)
+        .single()
+
+
+fun StringKeys.fret(ordinal: Int): Key =
+    this
+        .of(KeyGroup.Type.StringFrets)
+        .get(ordinal - 1)
+
+// endregion
