@@ -46,9 +46,9 @@ fun StringKeys.open(): Key =
         .single()
 
 
-fun StringKeys.fret(ordinal: Int): Key =
+fun StringKeys.fret(ordinalInString: Int): Key =
     this
         .of(KeyGroup.Type.StringFrets)
-        .get(ordinal - 1)
+        .get(ordinalInString - 1)
 
 // endregion
