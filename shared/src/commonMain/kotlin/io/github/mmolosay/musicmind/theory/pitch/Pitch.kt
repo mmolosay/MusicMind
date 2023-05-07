@@ -17,7 +17,7 @@ import kotlin.math.round
  * [Tone](https://en.wikipedia.org/wiki/Musical_tone)
  */
 @JvmInline
-value class Pitch internal constructor(val frequency: Double) : Comparable<Pitch> {
+value class Pitch internal constructor(val frequency: Float) : Comparable<Pitch> {
 
     init {
         require(frequency > 0) { "Pitch can only be defined by positive frequency" }
@@ -29,28 +29,31 @@ value class Pitch internal constructor(val frequency: Double) : Comparable<Pitch
     operator fun times(other: Int): Pitch =
         Pitch(frequency * other)
 
-    operator fun times(other: Double): Pitch =
+    operator fun times(other: Float): Pitch =
         Pitch(frequency * other)
 
-    operator fun div(other: Pitch): Double =
+    operator fun div(other: Pitch): Float =
         this.frequency / other.frequency
 
-    operator fun div(other: Double): Pitch =
+    operator fun div(other: Float): Pitch =
         Pitch(frequency / other)
 
     companion object {
         val HumanPercievableLowest by lazy { 20.hz }
         val HumanPercievableHighest by lazy { 20_000.hz }
-        val InfinitelyLow by lazy { Pitch(Double.MIN_VALUE) }
-        val InfinitelyHigh by lazy { Pitch(Double.MAX_VALUE) }
+        val InfinitelyLow by lazy { Pitch(Float.MIN_VALUE) }
+        val InfinitelyHigh by lazy { Pitch(Float.MAX_VALUE) }
     }
 }
 
-val Double.hz: Pitch
+val Float.hz: Pitch
     get() = Pitch(frequency = this)
 
+val Double.hz: Pitch
+    get() = Pitch(frequency = this.toFloat())
+
 val Int.hz: Pitch
-    get() = Pitch(frequency = this.toDouble())
+    get() = Pitch(frequency = this.toFloat())
 
 val Pitch.octaveHigher: Pitch
     get() = this * OctaveRatio

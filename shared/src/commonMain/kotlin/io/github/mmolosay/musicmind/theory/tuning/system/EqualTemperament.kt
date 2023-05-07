@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.tuning.system
 
-import io.github.mmolosay.musicmind.theory.Constants
+import io.github.mmolosay.musicmind.theory.Constants.OctaveRatioDouble
 import io.github.mmolosay.musicmind.theory.cents.Cents
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem.Step
 import kotlin.math.pow
@@ -35,4 +35,4 @@ class EqualTemperament(
 }
 
 val EqualTemperament.oneStepRatio: Double
-    get() = Constants.OctaveRatio.pow(1.0 / pitchClasses) // pitchClasses-th root of 2 (octave ratio)
+    get() = OctaveRatioDouble.pow(1.0 / pitchClasses) // pitchClasses-th root of 2 (octave ratio)

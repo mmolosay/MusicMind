@@ -1,6 +1,6 @@
 package io.github.mmolosay.musicmind.theory.tuning
 
-import io.github.mmolosay.musicmind.theory.Constants
+import io.github.mmolosay.musicmind.theory.Constants.OctaveRatioDouble
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.tuning.instrument.FretboardTuning
 import io.github.mmolosay.musicmind.theory.tuning.instrument.KeyboardTuning
@@ -8,13 +8,10 @@ import io.github.mmolosay.musicmind.theory.tuning.system.EqualTemperament
 import io.github.mmolosay.musicmind.theory.tuning.system.PureIntonation
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 import io.github.mmolosay.musicmind.theory.tuning.system.oneStepRatio
-import java.text.DecimalFormat
 import kotlin.math.pow
 
+// TODO: abolish and use just PitchSequencer as a class?
 class DefaultPitchSequencer : PitchSequencer {
-
-    /** A format that removes decimal digits after first 6 */
-    private val format = DecimalFormat("#.######")
 
     override fun TuningSystem.plus(tuning: KeyboardTuning): Sequence<Pitch> =
         when (this) {
@@ -35,7 +32,7 @@ class DefaultPitchSequencer : PitchSequencer {
             while (true) {
                 val power = ordinal - KeyboardTuning.A4Ordinal
                 val a4Offset = ratio.pow(power).toBigDecimal()
-                val hz = format.format(a4Offset * tuning.a4Frequency).toDouble()
+                val hz = (a4Offset * tuning.a4Frequency).toFloat()
                 yield(Pitch(hz))
                 ordinal++
             }
@@ -50,8 +47,8 @@ class DefaultPitchSequencer : PitchSequencer {
                 var ordinal = 1
                 val pitchClasses = pitchClasses.toDouble()
                 while (true) {
-                    val multiplier = Constants.OctaveRatio.pow((ordinal - 1) / pitchClasses).toBigDecimal()
-                    val hz = format.format(openStringFrequency * multiplier).toDouble()
+                    val multiplier = OctaveRatioDouble.pow((ordinal - 1) / pitchClasses).toBigDecimal()
+                    val hz = (openStringFrequency * multiplier).toFloat()
                     yield(Pitch(hz))
                     ordinal++
                 }
