@@ -10,7 +10,7 @@ object KeysFactory {
 
     fun Keyboard(size: Int): KeyboardKeys =
         KeyboardKeys(
-            all = List(size) { i -> Key(ordinal = i + 1) },
+            keys = List(size) { i -> Key(ordinal = i + 1) },
         )
 
     fun Fretboard(

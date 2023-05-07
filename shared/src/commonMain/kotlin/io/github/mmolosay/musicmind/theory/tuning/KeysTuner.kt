@@ -42,7 +42,7 @@ internal class KeysTuner(
     ): Map<Key, Pitch> =
         with(pitchSequencer) { equalTemperament + keyboardTuning }
             .let { pitches ->
-                all.mapIndexed { i, key -> key to pitches.elementAt(i) }.toMap()
+                mapIndexed { i, key -> key to pitches.elementAt(i) }.toMap()
             }
 
     private fun KeyboardKeys.tune(

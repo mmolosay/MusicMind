@@ -1,10 +1,9 @@
 package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 
-@JvmInline
-value class KeyboardKeys internal constructor(
-    val all: List<Key>,
-) : Keys {
+class KeyboardKeys internal constructor(
+    keys: List<Key>,
+) : Keys, List<Key> by keys {
 
     override val total: Int
-        get() = all.size
+        get() = size
 }
