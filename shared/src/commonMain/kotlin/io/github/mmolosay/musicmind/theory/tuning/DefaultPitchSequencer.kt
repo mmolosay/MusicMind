@@ -10,7 +10,7 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 import io.github.mmolosay.musicmind.theory.tuning.system.oneStepRatio
 import kotlin.math.pow
 
-// TODO: abolish and use just PitchSequencer as a class?
+// TODO: abolish interface and use just PitchSequencer as a class?
 class DefaultPitchSequencer : PitchSequencer {
 
     override fun TuningSystem.plus(tuning: KeyboardTuning): Sequence<Pitch> =
