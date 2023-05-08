@@ -25,8 +25,8 @@ data class NaturalsSpacing(
 
 @Composable
 fun Keyboard(
-    octaves: Int,
     modifier: Modifier = Modifier,
+    octaves: Int,
     naturalsColor: Color = MusicMindTheme.colors.keyboardNaturals,
     accidentalsColor: Color = MusicMindTheme.colors.keyboardAccidentals,
     spacing: NaturalsSpacing = NaturalsSpacing(),
