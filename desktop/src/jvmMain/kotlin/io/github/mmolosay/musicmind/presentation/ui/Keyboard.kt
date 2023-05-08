@@ -1,139 +1,128 @@
 package io.github.mmolosay.musicmind.presentation.ui
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import io.github.mmolosay.musicmind.presentation.ui.design.MusicMindTheme
-import kotlin.math.roundToInt
 
-// region Previews
-
-@Preview
-@Composable
-private fun Keyboard_Preview() {
-    Keyboard(
-        modifier = Modifier.size(400.dp, 380.dp)
-    )
-}
-
-// endregion
+data class NaturalsSpacing(
+    val naturalKeyWidthFraction: Float = 0.04f,
+    val max: Dp = 6.dp,
+)
 
 @Composable
 fun Keyboard(
+    octaves: Int,
     modifier: Modifier = Modifier,
-    octaves: Int = 2,
-    naturalsSpacing: Dp = 2.dp,
+    naturalsColor: Color = MusicMindTheme.colors.keyboardNaturals,
+    accidentalsColor: Color = MusicMindTheme.colors.keyboardAccidentals,
+    spacing: NaturalsSpacing = NaturalsSpacing(),
 ) {
-    require(octaves > 0) { "Octaves number must be posititve" }
-    Row(modifier = modifier) {
-        repeat(octaves) {
-            KeyboardOctave(
-                naturalsSpacing = naturalsSpacing,
+    BoxWithConstraints(
+        modifier = modifier,
+    ) {
+        val naturals = 7
+        val accidentals = 5
+        val totalNaturals = naturals * octaves
+        val totalSpacings = totalNaturals - 1
+        val kb = calcKeyboardSize(octaves)
+        var naturalsWidth = kb.width / (totalNaturals + (spacing.naturalKeyWidthFraction * totalSpacings))
+        var space = naturalsWidth * spacing.naturalKeyWidthFraction
+        if (space > spacing.max) { // recalculate naturals width
+            space = spacing.max
+            naturalsWidth = (kb.width - (space * totalSpacings)) / totalNaturals
+        }
+        val naturalsSize = DpSize(width = naturalsWidth, height = kb.height)
+        val accidentalsSize = naturalsSize.run {
+            copy(
+                width = width * AccidentalsToNaturalsWidthRatio,
+                height = height * AccidentalsToNaturalsHeightRatio,
             )
         }
-    }
-}
-
-@Composable
-private fun KeyboardOctave(
-    naturalsSpacing: Dp,
-) {
-    val density = LocalDensity.current
-    val measurePolicy = remember {
-        keyboardOctaveMeasurePolicy(
-            naturalsSpacing = with(density) { naturalsSpacing.roundToPx() },
-        )
-    }
-    Layout(
-        measurePolicy = measurePolicy,
-        content = {
-            KeyboardNaturalKey()
-            KeyboardAccidentalKey()
-            KeyboardNaturalKey()
-            KeyboardAccidentalKey()
-            KeyboardNaturalKey()
-            KeyboardNaturalKey()
-            KeyboardAccidentalKey()
-            KeyboardNaturalKey()
-            KeyboardAccidentalKey()
-            KeyboardNaturalKey()
-            KeyboardAccidentalKey()
-            KeyboardNaturalKey()
-        }
-    )
-}
-
-private fun keyboardOctaveMeasurePolicy(
-    naturalsSpacing: Int,
-): MeasurePolicy =
-    MeasurePolicy { measurables, constraints ->
-        val naturals = 7
-        val totalNaturalsSpacing = (naturals - 1) * naturalsSpacing
-        val naturalWidth = ((constraints.maxWidth - totalNaturalsSpacing) / naturals.toFloat()).roundToInt()
-        val naturalHeight = naturalWidth * 4
-        val accidentalWidth = (naturalWidth * (1f / 2)).roundToInt()
-        val accidentalHeight = (naturalHeight * (2f / 3)).roundToInt()
-        val placeables = measurables
-            .zip(KeyboardOctaveKeys)
-            .map { (measurable, isNatural) ->
-                if (isNatural)
-                    measurable.measure(
-                        constraints.copy(
-                            minWidth = naturalWidth,
-                            maxWidth = naturalWidth,
-                            minHeight = naturalHeight,
-                            maxHeight = naturalHeight,
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(space),
+        ) {
+            repeat(octaves) {
+                Box {
+                    // Naturals
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(space),
+                    ) {
+                        repeat(naturals) {
+                            KeyboardKey(
+                                modifier = Modifier.size(naturalsSize),
+                                color = naturalsColor,
+                            )
+                        }
+                    }
+                    // Accidentals
+                    var x = 0.dp
+                    val offset = (accidentalsSize.width + space) / 2f
+                    repeat(accidentals) { i ->
+                        val dist = NaturalsDistances[i]
+                        x += (naturalsSize.width + space) * dist
+                        KeyboardKey(
+                            modifier = Modifier
+                                .size(accidentalsSize)
+                                .offset(x = x - offset),
+                            color = accidentalsColor,
                         )
-                    )
-                else
-                    measurable.measure(
-                        constraints.copy(
-                            minWidth = accidentalWidth,
-                            maxWidth = accidentalWidth,
-                            minHeight = accidentalHeight,
-                            maxHeight = accidentalHeight,
-                        )
-                    )
-            }
-            .zip(KeyboardOctaveKeys)
-        layout(constraints.maxWidth, naturalHeight) {
-            var nX = 0
-            val aOffset = (naturalsSpacing + accidentalWidth) / 2
-            for ((item, isNatural) in placeables) {
-                if (isNatural) {
-                    item.placeRelative(nX, 0, 0f)
-                    nX += item.width + naturalsSpacing
-                } else {
-                    item.placeRelative(nX - aOffset, 0, 1f)
+                    }
                 }
             }
         }
     }
+}
+
+private fun BoxWithConstraintsScope.calcKeyboardSize(octaves: Int): DpSize =
+    if (maxWidth > maxHeight) {
+        calcKeyboardSizeFromHeight(octaves)
+            .takeUnless { it.width > maxWidth }
+            ?: calcKeyboardSizeFromWidth(octaves)
+    } else {
+        calcKeyboardSizeFromWidth(octaves)
+            .takeUnless { it.height > maxHeight }
+            ?: calcKeyboardSizeFromHeight(octaves)
+    }
+
+private fun BoxWithConstraintsScope.calcKeyboardSizeFromWidth(octaves: Int): DpSize {
+    val width = maxWidth
+    return DpSize(
+        width = width,
+        height = width / octaves / OctaveWidthToHeightRatio,
+    )
+}
+
+private fun BoxWithConstraintsScope.calcKeyboardSizeFromHeight(octaves: Int): DpSize {
+    val height = maxHeight
+    return DpSize(
+        width = height * octaves * OctaveWidthToHeightRatio,
+        height = height,
+    )
+}
 
 @Composable
-private fun KeyboardNaturalKey(
-    color: Color = MusicMindTheme.colors.keyboardNaturals,
-    cornerRadius: Dp = 5.dp,
+private fun KeyboardKey(
+    modifier: Modifier,
+    color: Color,
+    cornerRadius: Dp = 3.dp,
 ) {
     val density = LocalDensity.current
-    val radius = CornerRadius(x = with(density) { cornerRadius.toPx() })
-    Canvas(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-
+    val radius = with(density) { CornerRadius(x = cornerRadius.toPx()) }
+    Canvas(modifier = modifier) {
         drawRoundRect(
             color = color,
             cornerRadius = radius,
@@ -141,23 +130,8 @@ private fun KeyboardNaturalKey(
     }
 }
 
-@Composable
-private fun KeyboardAccidentalKey(
-    color: Color = MusicMindTheme.colors.keyboardAccidentals,
-    cornerRadius: Dp = 5.dp,
-) {
-    val density = LocalDensity.current
-    val radius = CornerRadius(x = with(density) { cornerRadius.toPx() })
-    Canvas(
-        modifier = Modifier.fillMaxSize().clickable { println("clicked") },
-    ) {
-        drawRoundRect(
-            color = color,
-            cornerRadius = radius,
-        )
-    }
-}
+private val NaturalsDistances = listOf(1, 1, 2, 1, 1) // successived number of natural keys to the next accidental key
 
-private val KeyboardOctaveKeys by lazy {
-    listOf(true, false, true, false, true, true, false, true, false, true, false, true)
-}
+private const val OctaveWidthToHeightRatio = 11f / 10
+private const val AccidentalsToNaturalsHeightRatio = 2f / 3
+private const val AccidentalsToNaturalsWidthRatio = 13f / 23
