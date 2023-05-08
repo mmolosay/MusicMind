@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -50,51 +52,13 @@ private fun KeyboardOctave(
     naturalsSpacing: Dp,
 ) {
     val density = LocalDensity.current
-    val naturalsSpacingPx = with(density) { naturalsSpacing.roundToPx() }
+    val measurePolicy = remember {
+        keyboardOctaveMeasurePolicy(
+            naturalsSpacing = with(density) { naturalsSpacing.roundToPx() },
+        )
+    }
     Layout(
-        measurePolicy = { measurables, constraints ->
-            val naturals = 7
-            val totalNaturalsSpacing = (naturals - 1) * naturalsSpacingPx
-            val naturalWidth = ((constraints.maxWidth - totalNaturalsSpacing) / naturals.toFloat()).roundToInt()
-            val naturalHeight = naturalWidth * 4
-            val accidentalWidth = (naturalWidth * (1f / 2)).roundToInt()
-            val accidentalHeight = (naturalHeight * (2f / 3)).roundToInt()
-            val placeables = measurables
-                .zip(KeyboardOctaveKeys)
-                .map { (measurable, isNatural) ->
-                    if (isNatural)
-                        measurable.measure(
-                            constraints.copy(
-                                minWidth = naturalWidth,
-                                maxWidth = naturalWidth,
-                                minHeight = naturalHeight,
-                                maxHeight = naturalHeight,
-                            )
-                        )
-                    else
-                        measurable.measure(
-                            constraints.copy(
-                                minWidth = accidentalWidth,
-                                maxWidth = accidentalWidth,
-                                minHeight = accidentalHeight,
-                                maxHeight = accidentalHeight,
-                            )
-                        )
-                }
-                .zip(KeyboardOctaveKeys)
-            layout(constraints.maxWidth, naturalHeight) {
-                var nX = 0
-                val aOffset = (naturalsSpacingPx + accidentalWidth) / 2
-                for ((item, isNatural) in placeables) {
-                    if (isNatural) {
-                        item.placeRelative(nX, 0, 0f)
-                        nX += item.width + naturalsSpacingPx
-                    } else {
-                        item.placeRelative(nX - aOffset, 0, 1f)
-                    }
-                }
-            }
-        },
+        measurePolicy = measurePolicy,
         content = {
             KeyboardNaturalKey()
             KeyboardAccidentalKey()
@@ -111,6 +75,53 @@ private fun KeyboardOctave(
         }
     )
 }
+
+private fun keyboardOctaveMeasurePolicy(
+    naturalsSpacing: Int,
+): MeasurePolicy =
+    MeasurePolicy { measurables, constraints ->
+        val naturals = 7
+        val totalNaturalsSpacing = (naturals - 1) * naturalsSpacing
+        val naturalWidth = ((constraints.maxWidth - totalNaturalsSpacing) / naturals.toFloat()).roundToInt()
+        val naturalHeight = naturalWidth * 4
+        val accidentalWidth = (naturalWidth * (1f / 2)).roundToInt()
+        val accidentalHeight = (naturalHeight * (2f / 3)).roundToInt()
+        val placeables = measurables
+            .zip(KeyboardOctaveKeys)
+            .map { (measurable, isNatural) ->
+                if (isNatural)
+                    measurable.measure(
+                        constraints.copy(
+                            minWidth = naturalWidth,
+                            maxWidth = naturalWidth,
+                            minHeight = naturalHeight,
+                            maxHeight = naturalHeight,
+                        )
+                    )
+                else
+                    measurable.measure(
+                        constraints.copy(
+                            minWidth = accidentalWidth,
+                            maxWidth = accidentalWidth,
+                            minHeight = accidentalHeight,
+                            maxHeight = accidentalHeight,
+                        )
+                    )
+            }
+            .zip(KeyboardOctaveKeys)
+        layout(constraints.maxWidth, naturalHeight) {
+            var nX = 0
+            val aOffset = (naturalsSpacing + accidentalWidth) / 2
+            for ((item, isNatural) in placeables) {
+                if (isNatural) {
+                    item.placeRelative(nX, 0, 0f)
+                    nX += item.width + naturalsSpacing
+                } else {
+                    item.placeRelative(nX - aOffset, 0, 1f)
+                }
+            }
+        }
+    }
 
 @Composable
 private fun KeyboardNaturalKey(
