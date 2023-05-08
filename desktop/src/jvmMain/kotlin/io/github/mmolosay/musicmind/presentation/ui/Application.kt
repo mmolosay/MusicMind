@@ -1,23 +1,38 @@
 package io.github.mmolosay.musicmind.presentation.ui
 
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import io.github.mmolosay.musicmind.presentation.ui.design.MusicMindTheme
 
 @Composable
-fun MusicMindApplication() {
-    var text by remember { mutableStateOf("Hello, World!") }
+fun MusicMindApplication() =
+    MusicMindTheme {
+        KeyboardScreen()
+    }
 
-    MaterialTheme {
-        Button(onClick = {
-            text = "Hello, Desktop!"
-        }) {
-            Text(text)
+@Composable
+private fun KeyboardScreen() =
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Row(
+            modifier = Modifier.offset(x = 20.dp, y = 20.dp),
+        ) {
+            Keyboard(
+                modifier = Modifier
+                    .width(420.dp)
+                    .background(Color(0xFF2B6E3A)),
+                octaves = 1,
+            )
         }
     }
-}
