@@ -26,7 +26,9 @@ object MusicMindTheme {
 
     data class Colors(
         val keyboardNaturals: Color,
+        val keyboardNaturalsIndication: Color,
         val keyboardAccidentals: Color,
+        val keyboardAccidentalsIndication: Color,
     )
 
     val colors: Colors

@@ -28,6 +28,8 @@ private fun KeyboardScreen() =
                 modifier = Modifier
                     .height(400.dp),
                 octaves = 2,
+                onNaturalKeyClick = { println("White key!") },
+                onAccidentalKeyClick = { println("Black key!") },
             )
         }
     }

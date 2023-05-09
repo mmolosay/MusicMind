@@ -1,6 +1,9 @@
 package io.github.mmolosay.musicmind.presentation.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -8,8 +11,12 @@ import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -27,8 +34,12 @@ data class NaturalsSpacing(
 fun Keyboard(
     modifier: Modifier = Modifier,
     octaves: Int,
+    onNaturalKeyClick: () -> Unit,
+    onAccidentalKeyClick: () -> Unit,
     naturalsColor: Color = MusicMindTheme.colors.keyboardNaturals,
+    naturalsIndicationColor: Color = MusicMindTheme.colors.keyboardNaturalsIndication,
     accidentalsColor: Color = MusicMindTheme.colors.keyboardAccidentals,
+    accidentalsIndicationColor: Color = MusicMindTheme.colors.keyboardAccidentalsIndication,
     spacing: NaturalsSpacing = NaturalsSpacing(),
 ) {
     BoxWithConstraints(
@@ -61,16 +72,20 @@ fun Keyboard(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(space),
                     ) {
+                        val indication = rememberRipple(color = naturalsIndicationColor)
                         repeat(naturals) {
                             KeyboardKey(
                                 modifier = Modifier.size(naturalsSize),
                                 color = naturalsColor,
+                                indication = indication,
+                                onClick = onNaturalKeyClick,
                             )
                         }
                     }
                     // Accidentals
                     var x = 0.dp
                     val offset = (accidentalsSize.width + space) / 2f
+                    val indication = rememberRipple(color = accidentalsIndicationColor)
                     repeat(accidentals) { i ->
                         val dist = NaturalsDistances[i]
                         x += (naturalsSize.width + space) * dist
@@ -79,6 +94,8 @@ fun Keyboard(
                                 .size(accidentalsSize)
                                 .offset(x = x - offset),
                             color = accidentalsColor,
+                            indication = indication,
+                            onClick = onAccidentalKeyClick,
                         )
                     }
                 }
@@ -119,10 +136,21 @@ private fun KeyboardKey(
     modifier: Modifier,
     color: Color,
     cornerRadius: Dp = 3.dp,
+    indication: Indication,
+    onClick: () -> Unit,
 ) {
     val density = LocalDensity.current
     val radius = with(density) { CornerRadius(x = cornerRadius.toPx()) }
-    Canvas(modifier = modifier) {
+    val shape = RoundedCornerShape(cornerRadius)
+    Canvas(
+        modifier = modifier
+            .clip(shape)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = indication,
+                onClick = onClick,
+            ),
+    ) {
         drawRoundRect(
             color = color,
             cornerRadius = radius,
