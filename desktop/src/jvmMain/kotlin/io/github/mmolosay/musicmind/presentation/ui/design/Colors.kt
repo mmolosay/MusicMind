@@ -26,5 +26,5 @@ private fun darkMusicMindColors(): MusicMindTheme.Colors =
         keyboardNaturals = Color.White,
         keyboardNaturalsIndication = Color.DarkGray,
         keyboardAccidentals = Color(0xFF1F1F1F),
-        keyboardAccidentalsIndication = Color.LightGray,
+        keyboardAccidentalsIndication = Color(0xFFEEEEEE),
     )
