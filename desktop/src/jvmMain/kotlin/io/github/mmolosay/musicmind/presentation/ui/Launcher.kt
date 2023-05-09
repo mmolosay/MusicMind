@@ -12,7 +12,7 @@ fun launchApplication() {
     application {
         val state = rememberWindowState(
             position = WindowPosition(Alignment.Center),
-            size = DpSize(width = 1000.dp, height = 800.dp),
+            size = DpSize(width = 1200.dp, height = 900.dp),
         )
         Window(
             state = state,
