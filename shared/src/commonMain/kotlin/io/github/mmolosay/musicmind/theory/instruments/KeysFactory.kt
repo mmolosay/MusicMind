@@ -42,7 +42,7 @@ object KeysFactory {
             key = ordinal++.key,
         )
         val frets = FretboardKeys.KeyGroup(
-            type = FretboardKeys.KeyGroup.Type.StringFrets,
+            type = FretboardKeys.KeyGroup.Type.StringFret,
             keys = List(fretsPerString) { ordinal++.key },
         )
         // TODO: resolve
