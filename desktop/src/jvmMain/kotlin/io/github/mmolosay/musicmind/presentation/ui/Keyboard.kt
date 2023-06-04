@@ -36,6 +36,7 @@ fun Keyboard(
     octaves: Int,
     onNaturalKeyClick: () -> Unit,
     onAccidentalKeyClick: () -> Unit,
+    drawLabels: Boolean = true,
     naturalsColor: Color = MusicMindTheme.colors.keyboardNaturals,
     naturalsIndicationColor: Color = MusicMindTheme.colors.keyboardNaturalsIndication,
     accidentalsColor: Color = MusicMindTheme.colors.keyboardAccidentals,
@@ -139,6 +140,7 @@ private fun KeyboardKey(
     indication: Indication,
     onClick: () -> Unit,
 ) {
+    // TODO: add 'drawLabels' Boolean parameter and draw labels
     val density = LocalDensity.current
     val radius = with(density) { CornerRadius(x = cornerRadius.toPx()) }
     val shape = RoundedCornerShape(cornerRadius)
