@@ -37,8 +37,8 @@ object Keys {
                     flageoletsPerString = flageoletsPerString,
                 ).also { add(it) }
             }
-        }.let { strings ->
-            FretboardKeys(strings)
+        }.let {
+            FretboardKeys(strings = it)
         }
 
     private fun makeFretboardStringKeys(
