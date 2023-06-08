@@ -2,8 +2,8 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys.KeyGroup
 
-typealias StringKeys = List<KeyGroup>
-typealias Strings = List<StringKeys>
+typealias StringGroups = List<KeyGroup>
+typealias Strings = List<StringGroups>
 
 class FretboardKeys internal constructor(
     val strings: Strings,
@@ -11,6 +11,20 @@ class FretboardKeys internal constructor(
 
     override val total: Int by lazy {
         strings.sumOf { it.total }
+    }
+
+    override fun with(ordinal: Int): Key? {
+//        val index = ordinal - 1
+//        var passed = 0
+//        var maybePassed = 0
+//        for (groups in strings) {
+//            maybePassed = passed + groups.total
+//            if (maybePassed >= ordinal) {
+//                return groups.
+//            }
+//            passed = maybePassed
+//        }
+        return strings.flatten().flatten().getOrNull(ordinal - 1)
     }
 
     class KeyGroup(
@@ -27,27 +41,6 @@ class FretboardKeys internal constructor(
         }
     }
 
-    val StringKeys.total: Int
+    val StringGroups.total: Int
         get() = sumOf { it.size }
 }
-
-// region Selectors
-
-fun FretboardKeys.string(ordinal: Int): StringKeys =
-    strings[ordinal - 1]
-
-fun StringKeys.of(type: KeyGroup.Type): KeyGroup =
-    first { it.type == type }
-
-fun StringKeys.open(): Key =
-    this
-        .of(KeyGroup.Type.OpenString)
-        .single()
-
-
-fun StringKeys.fret(ordinalInString: Int): Key =
-    this
-        .of(KeyGroup.Type.StringFret)
-        .get(ordinalInString - 1)
-
-// endregion

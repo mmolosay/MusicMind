@@ -18,22 +18,9 @@ class Instruments internal constructor(
 ) {
 
     fun Piano(
-        keys: Int = DefaultPianoKeys,
-        tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
+        keys: KeyboardKeys = KeysFactory.Keyboard(),
+        tuningSystem: TuningSystem = TuningSystems.Tet12(),
         instrumentTuning: KeyboardTuning = Tunings.ConcertPiano(),
-        pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<KeyboardKeys> =
-        Piano(
-            keys = KeysFactory.Keyboard(keys),
-            tuningSystem = tuningSystem,
-            instrumentTuning = instrumentTuning,
-            pitchClassifier = pitchClassifier,
-        )
-
-    fun Piano(
-        keys: KeyboardKeys,
-        tuningSystem: TuningSystem,
-        instrumentTuning: KeyboardTuning,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
     ): DiscretePitchInstrument<KeyboardKeys> =
         DiscretePitchInstrumentImpl(
@@ -48,7 +35,7 @@ class Instruments internal constructor(
         strings: Int = DefaultGuitarStrings,
         fretsPerString: Int = DefaultGuitarFretsPerString,
         flageoletsPerString: Int = DefaultGuitarFlageoletsPerString,
-        tuningSystem: TuningSystem = TuningSystems.EqualTemperament12Tone(),
+        tuningSystem: TuningSystem = TuningSystems.Tet12(),
         instrumentTuning: FretboardTuning = Tunings.Guitar.StandardTuning,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
     ): DiscretePitchInstrument<FretboardKeys> =
@@ -74,8 +61,6 @@ class Instruments internal constructor(
         )
 
     companion object {
-        private const val DefaultPianoKeys = 88
-
         private const val DefaultGuitarStrings = 6
         private const val DefaultGuitarFretsPerString = 22
         private const val DefaultGuitarFlageoletsPerString = 7

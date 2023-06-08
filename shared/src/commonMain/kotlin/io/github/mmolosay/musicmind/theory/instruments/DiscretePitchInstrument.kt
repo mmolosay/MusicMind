@@ -27,14 +27,4 @@ interface DiscretePitchInstrument<out K : Keys> : Instrument {
 
     infix fun Key.scale(partition: OctavePartition): FiniteKeyScale
     fun FiniteKeyScale.pitches(): FinitePitchScale
-
-    data class Note internal constructor(
-        val key: Key,
-        val pitch: Pitch,
-    ) : Comparable<Note> {
-
-        override fun compareTo(other: Note): Int =
-            this.key.compareTo(other.key)
-    }
-
 }

@@ -6,4 +6,7 @@ class KeyboardKeys internal constructor(
 
     override val total: Int
         get() = size
+
+    override fun with(ordinal: Int): Key? =
+        getOrNull(ordinal - 1)
 }

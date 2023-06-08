@@ -6,4 +6,5 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
  */
 sealed interface Keys {
     val total: Int
+    fun with(ordinal: Int): Key?
 }

@@ -6,7 +6,7 @@ object TuningSystems {
     /**
      * [12-TET – Wikipedia](https://en.wikipedia.org/wiki/12_equal_temperament)
      */
-    fun EqualTemperament12Tone(): EqualTemperament =
+    fun Tet12(): EqualTemperament =
         EqualTemperament(
             pitchClasses = 12,
         )

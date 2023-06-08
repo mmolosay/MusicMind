@@ -3,7 +3,6 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Keys
-import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.key
 import io.github.mmolosay.musicmind.theory.partition.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
@@ -46,6 +45,6 @@ abstract class AbstractDiscretePitchInstrument<out K : Keys>(
 
     protected operator fun Key.plus(distance: Distance): Key? {
         val resultOrdinal = this.ordinal + distance.steps
-        return resultOrdinal.key.takeIf { it.exists }
+        return keys.with(resultOrdinal)
     }
 }
