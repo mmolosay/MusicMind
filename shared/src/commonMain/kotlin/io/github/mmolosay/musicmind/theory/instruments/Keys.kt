@@ -9,7 +9,7 @@ import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.KeyboardLay
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.StringKeys
 
 @Suppress("FunctionName")
-object KeysFactory {
+object Keys {
 
     fun Keyboard(
         amount: Int = 88,

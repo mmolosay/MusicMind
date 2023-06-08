@@ -18,7 +18,7 @@ class Instruments internal constructor(
 ) {
 
     fun Piano(
-        keys: KeyboardKeys = KeysFactory.Keyboard(),
+        keys: KeyboardKeys = Keys.Keyboard(),
         tuningSystem: TuningSystem = TuningSystems.Tet12(),
         instrumentTuning: KeyboardTuning = Tunings.ConcertPiano(),
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
@@ -40,7 +40,7 @@ class Instruments internal constructor(
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
     ): DiscretePitchInstrument<FretboardKeys> =
         Guitar(
-            keys = KeysFactory.Fretboard(strings, fretsPerString, flageoletsPerString),
+            keys = Keys.Fretboard(strings, fretsPerString, flageoletsPerString),
             tuningSystem = tuningSystem,
             instrumentTuning = instrumentTuning,
             pitchClassifier = pitchClassifier,
