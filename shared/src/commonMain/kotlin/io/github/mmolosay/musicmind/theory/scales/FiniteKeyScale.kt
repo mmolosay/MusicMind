@@ -1,7 +1,7 @@
 package io.github.mmolosay.musicmind.theory.scales
 
-import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.Key
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentKey
 
 class FiniteKeyScale internal constructor(
-    keys: List<Key>,
-) : FiniteScale<Key>(keys)
+    keys: List<InstrumentKey>,
+) : FiniteScale<InstrumentKey>(keys)

@@ -6,9 +6,9 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 fun interface KeyboardLayout {
 
     /**
-     * Constructs [Key.Rank] for a key at [keyOrdinal].
+     * Constructs [InstrumentKey.Rank] for a key at [keyOrdinal].
      */
-    fun rankFor(keyOrdinal: Int): Key.Rank
+    fun rankFor(keyOrdinal: Int): KeyboardKey.Rank
 }
 
 @Suppress("FunctionName")
@@ -22,15 +22,17 @@ internal object KeyboardLayouts {
 
     private fun layoutBy(tiers: Array<Int>): KeyboardLayout =
         KeyboardLayout { ordinal ->
-            Key.Rank(tier = tiers[(ordinal - 1) % tiers.size]) // tiers.size == pitch classes count == keys per octave
+            KeyboardKey.Rank(tier = tiers[(ordinal - 1) % tiers.size]) // tiers.size == pitch classes count == keys per octave
         }
 
     private val rankTiersFor12PitchClasses by lazy {
         arrayOf(0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0)
     }
 
+    // https://en.wikipedia.org/wiki/19_equal_temperament
+    // https://en.wikipedia.org/wiki/19_equal_temperament#/media/File:19_equal_temperament_keyboard.png
     // http://www.n-ism.org/Projects/Microtonalism/keyboard_demo.php
     private val rankTiersFor19PitchClasses by lazy {
-        arrayOf(0, 1, 2, 0, 1, 2, 0, 1, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1)
+        arrayOf(0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1)
     }
 }
