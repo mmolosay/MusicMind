@@ -1,10 +1,10 @@
 package io.github.mmolosay.musicmind.theory.intervals
 
-import io.github.mmolosay.musicmind.theory.Ratio
+import io.github.mmolosay.musicmind.utils.Ratio
 import io.github.mmolosay.musicmind.theory.cents.Cents
 import io.github.mmolosay.musicmind.theory.perception.Stability
-import io.github.mmolosay.musicmind.theory.result
-import io.github.mmolosay.musicmind.theory.to
+import io.github.mmolosay.musicmind.utils.result
+import io.github.mmolosay.musicmind.utils.to
 import kotlin.math.log2
 
 internal enum class PureInterval(

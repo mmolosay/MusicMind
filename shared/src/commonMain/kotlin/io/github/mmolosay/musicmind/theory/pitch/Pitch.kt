@@ -49,9 +49,6 @@ value class Pitch internal constructor(val frequency: Float) : Comparable<Pitch>
 val Float.hz: Pitch
     get() = Pitch(frequency = this)
 
-val Double.hz: Pitch
-    get() = Pitch(frequency = this.toFloat())
-
 val Int.hz: Pitch
     get() = Pitch(frequency = this.toFloat())
 
@@ -70,9 +67,9 @@ infix fun Pitch.isPercievablyEqualTo(other: Pitch): Boolean =
 
 infix fun Pitch.isOfSamePitchClassAs(other: Pitch): Boolean {
     val ratio = other / this
-    val log2ratio = ln(ratio) / Log2
+    val log2ratio = ln(ratio) / NaturalLog2 // TODO: rewrite: log2(ratio)
     val diff = abs(round(log2ratio) - log2ratio)
     return (diff < PitchEqualityThreshold)
 }
 
-private val Log2 = ln(2.0)
+private val NaturalLog2 = ln(2.0)

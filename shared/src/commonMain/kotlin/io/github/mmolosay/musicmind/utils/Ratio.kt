@@ -1,4 +1,4 @@
-package io.github.mmolosay.musicmind.theory
+package io.github.mmolosay.musicmind.utils
 
 /**
  * A ratio of two number.

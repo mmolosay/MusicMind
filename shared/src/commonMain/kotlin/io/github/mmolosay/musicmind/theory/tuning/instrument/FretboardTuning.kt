@@ -4,12 +4,7 @@ import io.github.mmolosay.musicmind.theory.pitch.Pitch
 
 data class FretboardTuning internal constructor(
     val openStrings: List<Pitch>,
-) : InstrumentTuning {
-
-    init {
-        require(openStrings.isNotEmpty()) { "Can\'t create empty FretboardTuning" }
-    }
-}
+) : InstrumentTuning
 
 fun List<Pitch>.asFretboardTuning(): FretboardTuning =
     FretboardTuning(openStrings = this)

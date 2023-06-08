@@ -10,7 +10,7 @@ class KeyboardKeys internal constructor(
         keys[ordinal - 1]
 }
 
-class KeyboardKey(
+data class KeyboardKey(
     override val ordinal: Int,
     val rank: Rank,
 ) : InstrumentKey {

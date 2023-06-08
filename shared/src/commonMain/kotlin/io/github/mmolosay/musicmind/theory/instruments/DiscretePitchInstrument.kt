@@ -5,6 +5,7 @@ import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentK
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
+import io.github.mmolosay.musicmind.theory.pitch.PitchLabel
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
@@ -15,14 +16,15 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
  *
  * [Chromatic scale, musical instruments – Wikipedia](https://en.wikipedia.org/wiki/Diatonic_and_chromatic#Musical_instruments)
  */
-interface DiscretePitchInstrument<out K : InstrumentKeys<*>> : Instrument {
+interface DiscretePitchInstrument<out Keys : InstrumentKeys<*>> : Instrument {
 
-    val keys: K
+    val keys: Keys
     val tuningSystem: TuningSystem
-    val notes: Map<InstrumentKey, Pitch> //
+    val notes: Map<InstrumentKey, Pitch>
     val pitchClasses: List<PitchClass>
 
     val InstrumentKey.exists: Boolean
+    val InstrumentKey.label: PitchLabel
     val InstrumentKey.pitch: Pitch
 
     infix fun InstrumentKey.scale(partition: OctavePartition): FiniteKeyScale

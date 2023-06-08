@@ -7,6 +7,8 @@ import io.github.mmolosay.musicmind.theory.partition.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
+import io.github.mmolosay.musicmind.theory.pitch.PitchLabel
+import io.github.mmolosay.musicmind.theory.pitch.PitchLabels
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 
@@ -14,9 +16,9 @@ import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
  * Abstract implementation of [DiscretePitchInstrument] that defines some of its fields and methods.
  * Use this component in order to create custom implementation of [DiscretePitchInstrument].
  */
-abstract class AbstractDiscretePitchInstrument<out K : InstrumentKeys<*>>(
-    pitchClassifier: PitchClassifier,
-) : DiscretePitchInstrument<K> {
+abstract class AbstractDiscretePitchInstrument<out Keys : InstrumentKeys<*>> : DiscretePitchInstrument<Keys> {
+
+    protected abstract val pitchClassifier: PitchClassifier
 
     override val range: ClosedRange<Pitch> by lazy {
         notes.values.min()..notes.values.max()
@@ -26,12 +28,14 @@ abstract class AbstractDiscretePitchInstrument<out K : InstrumentKeys<*>>(
         get() = notes.containsValue(this)
 
     override val pitchClasses: List<PitchClass> by lazy {
-        TODO()
-//        with(pitchClassifier) { notes.map { it.pitch }.classes() }
+        with(pitchClassifier) { notes.values.toList().classes() }
     }
 
     override val InstrumentKey.exists: Boolean
         get() = ordinal <= keys.total
+
+    override val InstrumentKey.label: PitchLabel
+        get() = with(PitchLabels) { tuningSystem label notes.getValue(this@label) }
 
     override val InstrumentKey.pitch: Pitch
         get() = notes.getValue(this)

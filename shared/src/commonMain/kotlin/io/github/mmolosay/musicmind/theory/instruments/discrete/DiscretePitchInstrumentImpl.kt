@@ -15,8 +15,8 @@ data class DiscretePitchInstrumentImpl<out Keys : InstrumentKeys<*>> internal co
     override val notes: Map<InstrumentKey, Pitch>,
     override val tuningSystem: TuningSystem,
     override val tuning: InstrumentTuning,
-    val pitchClassifier: PitchClassifier,
-) : AbstractDiscretePitchInstrument<Keys>(pitchClassifier) {
+    override val pitchClassifier: PitchClassifier,
+) : AbstractDiscretePitchInstrument<Keys>() {
 
     override fun InstrumentKey.scale(partition: OctavePartition): FiniteKeyScale {
         assertExists()

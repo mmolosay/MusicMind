@@ -25,7 +25,7 @@ class FretboardKeys internal constructor(
     }
 }
 
-class FretboardKey(
+data class FretboardKey(
     override val ordinal: Int,
     val type: Type,
 ) : InstrumentKey {

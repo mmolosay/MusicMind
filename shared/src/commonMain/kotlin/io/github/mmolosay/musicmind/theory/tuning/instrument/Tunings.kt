@@ -8,7 +8,7 @@ object Tunings {
 
     fun ConcertPiano(): KeyboardTuning =
         KeyboardTuning(
-            a4Frequency = 440.toBigDecimal(), // concert pitch
+            a4Frequency = A4ConcertFrequency,
         )
 
     fun Guitar6String(
@@ -25,7 +25,10 @@ object Tunings {
     object Guitar {
 
         val StandardTuning by lazy {
-            Guitar6String(329.63.hz, 246.94.hz, 196.hz, 146.83.hz, 110.hz, 82.41.hz)
+            Guitar6String(329.63f.hz, 246.94f.hz, 196.hz, 146.83f.hz, 110.hz, 82.41f.hz)
         }
     }
+
+    val A4ConcertFrequency by lazy { 440.toBigDecimal() }
+    val A4ConcertPitch by lazy { A4ConcertFrequency.toFloat().hz }
 }
