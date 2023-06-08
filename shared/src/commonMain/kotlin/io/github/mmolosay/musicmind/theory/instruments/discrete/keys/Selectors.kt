@@ -1,5 +1,7 @@
 package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 
+// region FretboardKeys
+
 fun FretboardKeys.string(ordinal: Int): StringKeys =
     strings[ordinal - 1]
 
@@ -10,3 +12,5 @@ fun StringKeys.fret(ordinalInString: Int): InstrumentKey =
     this
         .filter { it.type == FretboardKey.Type.StringFret }
         .get(ordinalInString - 1)
+
+// endregion
