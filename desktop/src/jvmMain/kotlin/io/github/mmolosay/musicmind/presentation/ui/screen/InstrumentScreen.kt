@@ -8,12 +8,14 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.mmolosay.musicmind.presentation.Strings
 import io.github.mmolosay.musicmind.presentation.resources.localizedString
 import io.github.mmolosay.musicmind.presentation.ui.Keyboard
 import io.github.mmolosay.musicmind.presentation.ui.components.Screen
+import io.github.mmolosay.musicmind.theory.context.MusicContext
 
 @Composable
 fun InstrumentScreen() =
@@ -42,6 +44,7 @@ private fun LazyListScope.keyboard() =
     item(
         key = "keyboard",
     ) {
+        val piano = remember { MusicContext { Piano() } }
         Keyboard(
             modifier = Modifier
                 .height(400.dp),

@@ -1,21 +1,21 @@
 package io.github.mmolosay.musicmind.presentation
 
-import io.github.mmolosay.musicmind.theory.pitch.PitchLabel
+import io.github.mmolosay.musicmind.theory.pitch.Label
 
 interface NaturalsFormatter {
-    val PitchLabel.Natural.label: String
+    val Label.Natural.label: String
 }
 
 class DefaultNaturalsFormatter : NaturalsFormatter {
 
-    override val PitchLabel.Natural.label: String
+    override val Label.Natural.label: String
         get() = when (this) {
-            PitchLabel.Natural.A -> "A"
-            PitchLabel.Natural.B -> "B"
-            PitchLabel.Natural.C -> "C"
-            PitchLabel.Natural.D -> "D"
-            PitchLabel.Natural.E -> "E"
-            PitchLabel.Natural.F -> "F"
-            PitchLabel.Natural.G -> "G"
+            Label.Natural.A -> "A"
+            Label.Natural.B -> "B"
+            Label.Natural.C -> "C"
+            Label.Natural.D -> "D"
+            Label.Natural.E -> "E"
+            Label.Natural.F -> "F"
+            Label.Natural.G -> "G"
         }
 }

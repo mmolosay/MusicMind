@@ -5,7 +5,7 @@ import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentK
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
-import io.github.mmolosay.musicmind.theory.pitch.PitchLabel
+import io.github.mmolosay.musicmind.theory.pitch.Label
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
@@ -24,7 +24,7 @@ interface DiscretePitchInstrument<out Keys : InstrumentKeys<*>> : Instrument {
     val pitchClasses: List<PitchClass>
 
     val InstrumentKey.exists: Boolean
-    val InstrumentKey.label: PitchLabel
+    val InstrumentKey.label: Label
     val InstrumentKey.pitch: Pitch
 
     infix fun InstrumentKey.scale(partition: OctavePartition): FiniteKeyScale

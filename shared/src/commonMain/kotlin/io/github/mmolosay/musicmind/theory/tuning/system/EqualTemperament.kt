@@ -31,4 +31,4 @@ class EqualTemperament(
 }
 
 val EqualTemperament.oneStepRatio: Double
-    get() = OctaveRatioDouble.pow(1.0 / pitchClasses) // pitchClasses-th root of 2 (octave ratio)
+    get() = OctaveRatioDouble.pow(1.0 / pitchClasses) // pitchClasses-th root of 2 (octave ratio): n√2
