@@ -3,12 +3,12 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete
 import io.github.mmolosay.musicmind.theory.instruments.DiscretePitchInstrument
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentKey
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentKeys
+import io.github.mmolosay.musicmind.theory.label.Label
+import io.github.mmolosay.musicmind.theory.label.Labels
 import io.github.mmolosay.musicmind.theory.partition.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
-import io.github.mmolosay.musicmind.theory.label.Label
-import io.github.mmolosay.musicmind.theory.label.Labels
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 
@@ -16,7 +16,8 @@ import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
  * Abstract implementation of [DiscretePitchInstrument] that defines some of its fields and methods.
  * Use this component in order to create custom implementation of [DiscretePitchInstrument].
  */
-abstract class AbstractDiscretePitchInstrument<out Keys : InstrumentKeys<*>> : DiscretePitchInstrument<Keys> {
+abstract class AbstractDiscretePitchInstrument<Key : InstrumentKey, Keys : InstrumentKeys<Key>> :
+    DiscretePitchInstrument<Key, Keys> {
 
     protected abstract val pitchClassifier: PitchClassifier
 

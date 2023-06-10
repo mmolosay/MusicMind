@@ -3,7 +3,7 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 /**
  * A set that containing all keys of some instrument without duplicates.
  */
-sealed class InstrumentKeys<K : InstrumentKey> {
+sealed class InstrumentKeys<K : InstrumentKey> : Iterable<K> {
 
     abstract val total: Int
 
@@ -13,7 +13,7 @@ sealed class InstrumentKeys<K : InstrumentKey> {
         (ordinal in 1..total)
 }
 
-fun <K : InstrumentKey> InstrumentKeys<K>.withOrNull(ordinal: Int): K? =
+fun <K : InstrumentKey> InstrumentKeys<K>.keyOrNull(ordinal: Int): K? =
     if (!contains(ordinal)) null else key(ordinal)
 
 /**

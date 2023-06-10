@@ -23,6 +23,20 @@ class FretboardKeys internal constructor(
 //        }
         return strings.flatten()[ordinal - 1]
     }
+
+    override fun iterator(): Iterator<FretboardKey> =
+        object : Iterator<FretboardKey> {
+
+            val i = 0
+
+            override fun hasNext(): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun next(): FretboardKey {
+                TODO("Not yet implemented")
+            }
+        }
 }
 
 data class FretboardKey(

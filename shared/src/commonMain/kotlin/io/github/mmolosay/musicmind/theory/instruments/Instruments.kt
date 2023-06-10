@@ -1,7 +1,9 @@
 package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.instruments.discrete.DiscretePitchInstrumentImpl
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKey
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.FretboardKeys
+import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.KeyboardKey
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.KeyboardKeys
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
 import io.github.mmolosay.musicmind.theory.tuning.KeysTuner
@@ -22,7 +24,7 @@ class Instruments internal constructor(
         tuningSystem: TuningSystem = TuningSystems.Tet12(),
         instrumentTuning: KeyboardTuning = Tunings.ConcertPiano(),
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<KeyboardKeys> =
+    ): DiscretePitchInstrument<KeyboardKey, KeyboardKeys> =
         DiscretePitchInstrumentImpl(
             keys = keys,
             notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) },
@@ -38,7 +40,7 @@ class Instruments internal constructor(
         tuningSystem: TuningSystem = TuningSystems.Tet12(),
         instrumentTuning: FretboardTuning = Tunings.Guitar.StandardTuning,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<FretboardKeys> =
+    ): DiscretePitchInstrument<FretboardKey, FretboardKeys> =
         Guitar(
             keys = Keys.Fretboard(strings, fretsPerString, flageoletsPerString),
             tuningSystem = tuningSystem,
@@ -51,7 +53,7 @@ class Instruments internal constructor(
         tuningSystem: TuningSystem,
         instrumentTuning: FretboardTuning,
         pitchClassifier: PitchClassifier = defaultPitchClassifier,
-    ): DiscretePitchInstrument<FretboardKeys> =
+    ): DiscretePitchInstrument<FretboardKey, FretboardKeys> =
         DiscretePitchInstrumentImpl(
             keys = keys,
             notes = with(keysTuner) { keys.tune(tuningSystem, instrumentTuning) },

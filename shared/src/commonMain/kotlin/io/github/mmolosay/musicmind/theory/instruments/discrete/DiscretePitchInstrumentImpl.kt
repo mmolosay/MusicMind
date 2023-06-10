@@ -10,13 +10,13 @@ import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.tuning.instrument.InstrumentTuning
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
 
-data class DiscretePitchInstrumentImpl<out Keys : InstrumentKeys<*>> internal constructor(
+data class DiscretePitchInstrumentImpl<Key : InstrumentKey, Keys : InstrumentKeys<Key>> internal constructor(
     override val keys: Keys,
     override val notes: Map<InstrumentKey, Pitch>,
     override val tuningSystem: TuningSystem,
     override val tuning: InstrumentTuning,
     override val pitchClassifier: PitchClassifier,
-) : AbstractDiscretePitchInstrument<Keys>() {
+) : AbstractDiscretePitchInstrument<Key, Keys>() {
 
     override fun InstrumentKey.scale(partition: OctavePartition): FiniteKeyScale {
         assertExists()

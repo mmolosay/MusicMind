@@ -15,14 +15,14 @@ import io.github.mmolosay.musicmind.presentation.DefaultNoteFormatter
 import io.github.mmolosay.musicmind.presentation.Strings
 import io.github.mmolosay.musicmind.presentation.resources.localizedString
 import io.github.mmolosay.musicmind.presentation.ui.Keyboard
-import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.DrawLabels
 import io.github.mmolosay.musicmind.presentation.ui.components.Screen
 import io.github.mmolosay.musicmind.theory.context.MusicContext
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.accidentals
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.naturals
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.range
-import io.github.mmolosay.musicmind.theory.tuning.instrument.KeyboardTuning
+import io.github.mmolosay.musicmind.theory.label.Label
+import io.github.mmolosay.musicmind.theory.label.label
 
 @Composable
 fun InstrumentScreen() =
@@ -51,8 +51,7 @@ private fun LazyListScope.keyboard() =
     item(
         key = "keyboard",
     ) {
-        val tuning = KeyboardTuning(466.16376f)
-        val context = remember { MusicContext { Piano(instrumentTuning = tuning) } }
+        val context = remember { MusicContext { Piano() } }
         val labelFormatter = remember { DefaultNoteFormatter() }
 
         val octaves = 2
@@ -60,6 +59,8 @@ private fun LazyListScope.keyboard() =
         val keysPerOctave = instrument.tuningSystem.pitchClasses
         val totalKeys = keysPerOctave * octaves
 
+        val C = Label.Natural.C.label()
+        val Cs = remember(context) { with(instrument) { keys.filter { it.label == C } } }
         val keys = remember(context) { instrument.keys.range(28, totalKeys) }
         val naturals = remember(context) {
             keys.naturals()

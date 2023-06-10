@@ -1,6 +1,7 @@
 package io.github.mmolosay.musicmind.theory.label
 
 import io.github.mmolosay.musicmind.theory.cents.Cents
+import io.github.mmolosay.musicmind.theory.label.Label.Alteration.Sign
 import io.github.mmolosay.musicmind.theory.label.Label.Natural
 
 /**
@@ -30,17 +31,27 @@ data class Label(
         enum class Sign {
             Sharp, Flat,
         }
+
+        companion object {
+            val None by lazy { 0.sharp }
+        }
     }
 }
+
+fun Natural.label(
+    alteration: Label.Alteration = Label.Alteration.None,
+    deviation: Cents = Cents.Zero,
+): Label =
+    Label(this, alteration, deviation)
 
 val Label.isAccurate: Boolean
     get() = (deviation == Cents.Zero)
 
 val Int.sharp: Label.Alteration
-    get() = Label.Alteration(sign = Label.Alteration.Sign.Sharp, amount = this)
+    get() = Label.Alteration(sign = Sign.Sharp, amount = this)
 
 val Int.flat: Label.Alteration
-    get() = Label.Alteration(sign = Label.Alteration.Sign.Flat, amount = this)
+    get() = Label.Alteration(sign = Sign.Flat, amount = this)
 
 val Label.Alteration.isZero: Boolean
     get() = (amount == 0)

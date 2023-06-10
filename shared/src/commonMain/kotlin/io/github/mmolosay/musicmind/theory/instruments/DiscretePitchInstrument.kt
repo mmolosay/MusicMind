@@ -16,7 +16,7 @@ import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem
  *
  * [Chromatic scale, musical instruments – Wikipedia](https://en.wikipedia.org/wiki/Diatonic_and_chromatic#Musical_instruments)
  */
-interface DiscretePitchInstrument<out Keys : InstrumentKeys<*>> : Instrument {
+interface DiscretePitchInstrument<Key : InstrumentKey, Keys : InstrumentKeys<Key>> : Instrument {
 
     val keys: Keys
     val tuningSystem: TuningSystem

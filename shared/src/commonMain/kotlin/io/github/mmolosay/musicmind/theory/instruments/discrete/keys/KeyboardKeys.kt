@@ -8,6 +8,9 @@ class KeyboardKeys internal constructor(
 
     override fun key(ordinal: Int): KeyboardKey =
         list[ordinal - 1]
+
+    override fun iterator(): Iterator<KeyboardKey> =
+        list.listIterator()
 }
 
 data class KeyboardKey(
