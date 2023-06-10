@@ -36,7 +36,7 @@ import io.github.mmolosay.musicmind.presentation.ui.design.MusicMindTheme
 
 @Composable
 fun Keyboard(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     octaves: Int,
     onNaturalKeyClick: () -> Unit,
     onAccidentalKeyClick: () -> Unit,
