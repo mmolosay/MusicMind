@@ -6,5 +6,5 @@ internal object Constants {
     const val OctaveRatioDouble = 2.0
 
     // TODO: https://en.wikipedia.org/wiki/Pitch_(music)#Just-noticeable_difference
-    const val PitchEqualityThreshold = 2e-5
+    const val PitchEqualityThreshold = 2e-4 // 0.0002
 }

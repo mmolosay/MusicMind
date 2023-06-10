@@ -2,13 +2,16 @@ package io.github.mmolosay.musicmind.theory.tuning.instrument
 
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.hz
+import io.github.mmolosay.musicmind.theory.tuning.PitchCalculator.A4ConcertFrequency
 
 @Suppress("FunctionName")
 object Tunings {
 
+    val A4ConcertPitch by lazy { A4ConcertFrequency.toFloat().hz }
+
     fun ConcertPiano(): KeyboardTuning =
         KeyboardTuning(
-            a4Frequency = A4ConcertFrequency,
+            a4Frequency = A4ConcertPitch.frequency,
         )
 
     fun Guitar6String(
@@ -28,7 +31,4 @@ object Tunings {
             Guitar6String(329.63f.hz, 246.94f.hz, 196.hz, 146.83f.hz, 110.hz, 82.41f.hz)
         }
     }
-
-    val A4ConcertFrequency by lazy { 440.toBigDecimal() }
-    val A4ConcertPitch by lazy { A4ConcertFrequency.toFloat().hz }
 }

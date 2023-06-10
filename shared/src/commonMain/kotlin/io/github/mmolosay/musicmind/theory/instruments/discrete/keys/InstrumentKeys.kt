@@ -7,14 +7,14 @@ sealed class InstrumentKeys<K : InstrumentKey> {
 
     abstract val total: Int
 
-    abstract fun with(ordinal: Int): K
+    abstract fun key(ordinal: Int): K
 
     fun contains(ordinal: Int): Boolean =
         (ordinal in 1..total)
 }
 
 fun <K : InstrumentKey> InstrumentKeys<K>.withOrNull(ordinal: Int): K? =
-    if (!contains(ordinal)) null else with(ordinal)
+    if (!contains(ordinal)) null else key(ordinal)
 
 /**
  * Represents a specific physical position on a discrete pitch instrument.

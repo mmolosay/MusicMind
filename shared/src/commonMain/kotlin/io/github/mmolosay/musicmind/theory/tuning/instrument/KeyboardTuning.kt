@@ -1,9 +1,12 @@
 package io.github.mmolosay.musicmind.theory.tuning.instrument
 
-import java.math.BigDecimal
-
+/**
+ * Tuning for a discrete pitch instrument with a keyboard.
+ * Frequency of [a4Frequency] reference pitch should be given with precision of
+ * [io.github.mmolosay.musicmind.theory.Constants.PitchEqualityThreshold].
+ */
 data class KeyboardTuning(
-    val a4Frequency: BigDecimal,
+    val a4Frequency: Float,
 ) : InstrumentTuning {
 
     companion object {

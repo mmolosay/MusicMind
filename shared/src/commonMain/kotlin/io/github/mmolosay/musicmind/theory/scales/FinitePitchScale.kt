@@ -2,7 +2,7 @@ package io.github.mmolosay.musicmind.theory.scales
 
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.isOfSamePitchClassAs
-import io.github.mmolosay.musicmind.theory.pitch.octaveHigher
+import io.github.mmolosay.musicmind.theory.pitch.oneOctaveHigher
 
 class FinitePitchScale internal constructor(
     pitches: List<Pitch>,
@@ -14,4 +14,4 @@ val FinitePitchScale.hasOctaveEntry: Boolean
 
 fun FinitePitchScale.withOctaveEntry(): FinitePitchScale =
     if (hasOctaveEntry) this
-    else FinitePitchScale(this + first().octaveHigher)
+    else FinitePitchScale(this + first().oneOctaveHigher)

@@ -7,8 +7,8 @@ import io.github.mmolosay.musicmind.theory.partition.Distance
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
 import io.github.mmolosay.musicmind.theory.pitch.PitchClassifier
-import io.github.mmolosay.musicmind.theory.pitch.Label
-import io.github.mmolosay.musicmind.theory.pitch.PitchLabels
+import io.github.mmolosay.musicmind.theory.label.Label
+import io.github.mmolosay.musicmind.theory.label.Labels
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 
@@ -35,7 +35,7 @@ abstract class AbstractDiscretePitchInstrument<out Keys : InstrumentKeys<*>> : D
         get() = ordinal <= keys.total
 
     override val InstrumentKey.label: Label
-        get() = with(PitchLabels) { tuningSystem label notes.getValue(this@label) }
+        get() = with(Labels) { tuningSystem label notes.getValue(this@label) }
 
     override val InstrumentKey.pitch: Pitch
         get() = notes.getValue(this)
@@ -49,6 +49,6 @@ abstract class AbstractDiscretePitchInstrument<out Keys : InstrumentKeys<*>> : D
 
     protected operator fun InstrumentKey.plus(distance: Distance): InstrumentKey? {
         val resultOrdinal = this.ordinal + distance.steps
-        return keys.with(resultOrdinal)
+        return keys.key(resultOrdinal)
     }
 }

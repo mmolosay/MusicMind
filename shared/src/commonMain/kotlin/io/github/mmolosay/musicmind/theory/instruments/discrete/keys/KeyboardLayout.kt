@@ -6,9 +6,9 @@ package io.github.mmolosay.musicmind.theory.instruments.discrete.keys
 fun interface KeyboardLayout {
 
     /**
-     * Constructs [InstrumentKey.Rank] for a key at [keyOrdinal].
+     * Determines keyboard key rank for a key at [keyOrdinal].
      */
-    fun rankFor(keyOrdinal: Int): KeyboardKey.Rank
+    fun rankFor(keyOrdinal: Int): Int
 }
 
 @Suppress("FunctionName")
@@ -22,7 +22,7 @@ internal object KeyboardLayouts {
 
     private fun layoutBy(tiers: Array<Int>): KeyboardLayout =
         KeyboardLayout { ordinal ->
-            KeyboardKey.Rank(tier = tiers[(ordinal - 1) % tiers.size]) // tiers.size == pitch classes count == keys per octave
+            tiers[(ordinal - 1) % tiers.size] // tiers.size == pitch classes count == keys per octave
         }
 
     private val rankTiersFor12PitchClasses by lazy {

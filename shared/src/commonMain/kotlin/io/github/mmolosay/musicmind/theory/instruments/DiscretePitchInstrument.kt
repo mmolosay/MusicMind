@@ -2,10 +2,10 @@ package io.github.mmolosay.musicmind.theory.instruments
 
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentKey
 import io.github.mmolosay.musicmind.theory.instruments.discrete.keys.InstrumentKeys
+import io.github.mmolosay.musicmind.theory.label.Label
 import io.github.mmolosay.musicmind.theory.partition.OctavePartition
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.PitchClass
-import io.github.mmolosay.musicmind.theory.pitch.Label
 import io.github.mmolosay.musicmind.theory.scales.FiniteKeyScale
 import io.github.mmolosay.musicmind.theory.scales.FinitePitchScale
 import io.github.mmolosay.musicmind.theory.tuning.system.TuningSystem

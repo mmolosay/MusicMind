@@ -39,11 +39,12 @@ internal class KeysTuner(
     private fun KeyboardKeys.tune(
         equalTemperament: EqualTemperament,
         keyboardTuning: KeyboardTuning,
-    ): Map<InstrumentKey, Pitch> =
-        with(pitchSequencer) { equalTemperament + keyboardTuning }
-            .let { pitches ->
-                keys.mapIndexed { i, key -> key to pitches.elementAt(i) }.toMap()
-            }
+    ): Map<InstrumentKey, Pitch> {
+        val pitches = with(pitchSequencer) { equalTemperament + keyboardTuning }
+            .take(list.size)
+            .toList()
+        return list.zip(pitches).toMap()
+    }
 
     private fun KeyboardKeys.tune(
         pureIntonation: PureIntonation,
@@ -55,11 +56,14 @@ internal class KeysTuner(
         equalTemperament: EqualTemperament,
         fretboardTuning: FretboardTuning,
     ): Map<InstrumentKey, Pitch> {
+        val keysPerString = strings.map { it.size }
         val sequences = with(pitchSequencer) { equalTemperament + fretboardTuning }
-        return strings
-            .zip(sequences)
-            .flatMap { (keys, pitches) -> keys.zip(pitches.take(keys.size).toList()) }
-            .toMap()
+        val pitches = sequences
+            .zip(keysPerString)
+            .map { (pitches, keys) -> pitches.take(keys).toList() }
+            .flatten()
+        val keys = strings.flatten()
+        return keys.zip(pitches).toMap()
     }
 
     fun FretboardKeys.tune(

@@ -10,7 +10,7 @@ class FretboardKeys internal constructor(
         strings.sumOf { it.size }
     }
 
-    override fun with(ordinal: Int): FretboardKey {
+    override fun key(ordinal: Int): FretboardKey {
 //        val index = ordinal - 1
 //        var passed = 0
 //        var maybePassed = 0

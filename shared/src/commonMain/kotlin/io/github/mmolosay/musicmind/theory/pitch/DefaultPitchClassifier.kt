@@ -14,7 +14,7 @@ class DefaultPitchClassifier : PitchClassifier {
     private fun List<Pitch>.countClasses(): Int {
         if (isEmpty()) return 0
         if (size == 1) return 1
-        val end = first().octaveHigher
+        val end = first().oneOctaveHigher
         var i = 1
         while (!get(i).isOfSamePitchClassAs(end) && i != lastIndex) i++
         return i

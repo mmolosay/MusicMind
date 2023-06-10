@@ -1,13 +1,15 @@
 package io.github.mmolosay.musicmind.theory.tuning
 
-import io.github.mmolosay.musicmind.theory.pitch.Label
+import io.github.mmolosay.musicmind.theory.label.Label
 import io.github.mmolosay.musicmind.theory.pitch.Pitch
 import io.github.mmolosay.musicmind.theory.pitch.hz
 import io.github.mmolosay.musicmind.theory.pitch.isOfSamePitchClassAs
 import io.github.mmolosay.musicmind.theory.pitch.isPercievablyEqualTo
-import io.github.mmolosay.musicmind.theory.tuning.instrument.Tunings
+import io.github.mmolosay.musicmind.theory.tuning.instrument.Tunings.A4ConcertPitch
 import io.github.mmolosay.musicmind.theory.tuning.system.EqualTemperament
 import io.github.mmolosay.musicmind.theory.tuning.system.oneStepRatio
+import java.math.BigDecimal
+import java.math.MathContext
 import java.math.RoundingMode
 import kotlin.math.log2
 import kotlin.math.pow
@@ -16,22 +18,31 @@ import kotlin.math.round
 /**
  * Performs calculations, related to frequencies and transposing.
  */
-/*internal TODO*/ object PitchCalculator {
+internal object PitchCalculator {
+
+    val A4ConcertFrequency by lazy { 440.toBigDecimal(c) }
+
+    private val rounding = RoundingMode.HALF_UP
+    private val c = MathContext(15, rounding)
 
     /**
      * Adds number of [steps] to receiver pitch in terms of specified [tuningSystem].
      */
-    fun Pitch.plusSteps(steps: Int, tuningSystem: EqualTemperament): Pitch =
-        (frequency * tuningSystem.oneStepRatio.pow(steps)).toFloat().hz
+    fun Pitch.plusSteps(steps: Int, tuningSystem: EqualTemperament): Pitch {
+        val hz = frequency.toBigDecimal()
+        val multiplier = tuningSystem.oneStepRatio.pow(steps).toBigDecimal()
+        val result = hz.multiply(multiplier, c).setPitchScale()
+        return result.toFloat().hz
+    }
 
     /**
      * Calculates distance between two pitches in given [EqualTemperament].
      * The said distance is measured in amount of steps between two spesified pitches.
      */
-    fun EqualTemperament.stepsBetween(first: Pitch, second: Pitch): Double {
-        val ratio = second.frequency.toBigDecimal().divide(
-            first.frequency.toBigDecimal(), 8, RoundingMode.HALF_UP
-        )
+    fun EqualTemperament.stepsBetween(pitch1: Pitch, pitch2: Pitch): Double {
+        val hz1 = pitch1.frequency.toBigDecimal()
+        val hz2 = pitch2.frequency.toBigDecimal()
+        val ratio = hz2.divide(hz1, c)
         val octaveFraction = log2(ratio.toDouble())
         return pitchClasses * octaveFraction
     }
@@ -44,15 +55,14 @@ import kotlin.math.round
      * At the same time, there's no pitch of `442 Hz` there. It is not an `'accurate'` pitch.
      */
     fun EqualTemperament.closestAccuratePitchTo(pitch: Pitch): Pitch {
-        val reference = Tunings.A4ConcertFrequency
-        val referencePitch = reference.toFloat().hz
-        if (pitch isPercievablyEqualTo referencePitch) return referencePitch
-        val ratio = pitch.frequency.toBigDecimal().divide(
-            reference, 8, RoundingMode.HALF_UP
-        )
+        val reference = A4ConcertFrequency
+        if (pitch isPercievablyEqualTo A4ConcertPitch) return A4ConcertPitch
+
+        val ratio = pitch.frequency.toBigDecimal().divide(reference, c)
         val octaveFraction = log2(ratio.toDouble())
-        val steps = round(pitchClasses * octaveFraction)
-        val frequency = reference * 2.0.pow(steps / pitchClasses).toBigDecimal()
+        val steps = round(pitchClasses * octaveFraction).toInt()
+        val multiplier = oneStepRatio.pow(steps).toBigDecimal(c)
+        val frequency = reference.multiply(multiplier, c).setPitchScale()
         return frequency.toFloat().hz
     }
 
@@ -90,6 +100,9 @@ import kotlin.math.round
         val natural: Label.Natural,
         val stepsDistance: Int,
     )
+
+    private fun BigDecimal.setPitchScale() =
+        setScale(5, rounding)
 
     /**
      * [Piano key frequencies – Wikipedia](https://en.wikipedia.org/wiki/Piano_key_frequencies)

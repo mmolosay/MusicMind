@@ -22,7 +22,7 @@ object Keys {
                 ordinal = ordinal,
                 rank = layout.rankFor(ordinal + firstOctaveOffset),
             )
-        }.let { KeyboardKeys(keys = it) }
+        }.let { KeyboardKeys(list = it) }
 
     fun Fretboard(
         strings: Int,

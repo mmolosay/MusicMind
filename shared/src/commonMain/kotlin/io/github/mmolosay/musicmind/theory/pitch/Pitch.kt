@@ -26,6 +26,9 @@ value class Pitch internal constructor(val frequency: Float) : Comparable<Pitch>
     override fun compareTo(other: Pitch): Int =
         frequency.compareTo(other.frequency)
 
+    operator fun minus(other: Pitch): Float =
+        this.frequency - other.frequency
+
     operator fun times(other: Int): Pitch =
         Pitch(frequency * other)
 
@@ -52,7 +55,7 @@ val Float.hz: Pitch
 val Int.hz: Pitch
     get() = Pitch(frequency = this.toFloat())
 
-val Pitch.octaveHigher: Pitch
+val Pitch.oneOctaveHigher: Pitch
     get() = this * OctaveRatio
 
 val Pitch.isHumanPercievable: Boolean
