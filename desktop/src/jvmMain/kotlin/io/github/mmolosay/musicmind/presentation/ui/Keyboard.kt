@@ -33,6 +33,7 @@ import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.DrawLabel
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.DrawLabels
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.NaturalsSpacing
 import io.github.mmolosay.musicmind.presentation.ui.design.MusicMindTheme
+import io.github.mmolosay.musicmind.theory.label.Label
 
 @Composable
 fun Keyboard(
@@ -47,24 +48,27 @@ fun Keyboard(
     BoxWithConstraints(
         modifier = modifier,
     ) {
-        val naturals = 7
-        val accidentals = 5
+        val keysPerOctave = 12
+        val naturals = Label.Natural.Total
+        val accidentals = keysPerOctave - naturals
         val totalNaturals = naturals * octaves
         val totalSpacings = totalNaturals - 1
-        val kb = calcKeyboardSize(octaves)
-        var naturalsWidth = kb.width / (totalNaturals + (spacing.naturalKeyWidthFraction * totalSpacings))
+
+        val size = calcKeyboardSize(octaves)
+        var naturalsWidth = size.width / (totalNaturals + (spacing.naturalKeyWidthFraction * totalSpacings))
         var space = naturalsWidth * spacing.naturalKeyWidthFraction
         if (space > spacing.max) { // recalculate naturals width
             space = spacing.max
-            naturalsWidth = (kb.width - (space * totalSpacings)) / totalNaturals
+            naturalsWidth = (size.width - (space * totalSpacings)) / totalNaturals
         }
-        val naturalsSize = DpSize(width = naturalsWidth, height = kb.height)
+        val naturalsSize = DpSize(naturalsWidth, size.height)
         val accidentalsSize = naturalsSize.run {
             copy(
                 width = width * AccidentalsToNaturalsWidthRatio,
                 height = height * AccidentalsToNaturalsHeightRatio,
             )
         }
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(space),
         ) {

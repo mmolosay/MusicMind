@@ -21,6 +21,10 @@ data class Label(
      */
     enum class Natural {
         A, B, C, D, E, F, G;
+
+        companion object {
+            const val Total = 7
+        }
     }
 
     data class Alteration(
