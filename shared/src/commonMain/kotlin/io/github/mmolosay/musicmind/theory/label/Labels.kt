@@ -22,7 +22,7 @@ object Labels {
         val closestAccuratePitch = closestAccuratePitchTo(pitch)
         val result = closestNaturalPriorTo(closestAccuratePitch)
         val deviation = if (pitch isPercievablyEqualTo closestAccuratePitch) {
-            Cents.Zero
+            Cents.Zero // cut off difference if it is not human percievable
         } else {
             (pitch - closestAccuratePitch).cents // granted greater than Constants.PitchEqualityThreshold
         }
