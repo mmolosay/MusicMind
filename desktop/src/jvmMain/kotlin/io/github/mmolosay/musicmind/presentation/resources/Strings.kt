@@ -7,6 +7,7 @@ import androidx.compose.ui.text.intl.Locale
 import io.github.mmolosay.musicmind.presentation.StringFamily
 import io.github.mmolosay.musicmind.presentation.StringProvider
 import io.github.mmolosay.musicmind.presentation.Strings
+import io.github.mmolosay.musicmind.presentation.getOrEng
 
 val LocalStringProvider = staticCompositionLocalOf<StringProvider> { DesktopStringProvider() }
 
@@ -20,9 +21,10 @@ fun strings(type: Strings): StringFamily {
 @Composable
 @ReadOnlyComposable
 fun localizedString(
-    type: Strings,
-    locale: Locale = Locale.current
+    stringType: Strings,
+    locale: Locale = Locale.current,
 ): String {
-    val provider = LocalStringProvider.current
-    return provider.get(type).get(locale.language)
+    val stringProvider = LocalStringProvider.current
+    val stringFamily = stringProvider.get(stringType)
+    return stringFamily.getOrEng(locale.language)
 }

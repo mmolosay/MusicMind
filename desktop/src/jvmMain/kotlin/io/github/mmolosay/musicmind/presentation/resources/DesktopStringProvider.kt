@@ -12,7 +12,7 @@ class DesktopStringProvider : StringProvider {
     private companion object {
 
         val InstrumentScreenTitle = StringFamily(
-            default = "Instruments",
+            en = "Instruments",
         )
 
         val strings = mapOf(
