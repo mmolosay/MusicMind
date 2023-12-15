@@ -1,7 +1,9 @@
 package io.github.mmolosay.musicmind.presentation.ui
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Indication
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +30,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.AccidentalsPlacement
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.Colors
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.DrawLabel
 import io.github.mmolosay.musicmind.presentation.ui.KeyboardDefaults.DrawLabels
@@ -42,6 +45,7 @@ fun Keyboard(
     onNaturalKeyClick: () -> Unit,
     onAccidentalKeyClick: () -> Unit,
     drawLabels: DrawLabels = DrawLabels.No,
+    accidentalsPlacement: AccidentalsPlacement = AccidentalsPlacement.Staggering,
     colors: Colors = KeyboardDefaults.colors(),
     spacing: NaturalsSpacing = NaturalsSpacing(),
 ) {
@@ -95,14 +99,25 @@ fun Keyboard(
                     }
                     // Accidentals
                     var x = 0.dp
-                    val offset = (accidentalsSize.width + space) / 2f
                     val indication = rememberRipple(color = colors.accidentalsIndication)
+                    val offsets = when (accidentalsPlacement) {
+                        AccidentalsPlacement.Center -> {
+                            List(accidentals) { (accidentalsSize.width + space) / 2f }
+                        }
+
+                        AccidentalsPlacement.Staggering -> {
+                            calcStaggeringAccidentalsOffsets(
+                                accidentalWidth = accidentalsSize.width,
+                            )
+                        }
+                    }
                     repeat(accidentals) { i ->
                         val drawLabel = when (drawLabels) {
                             is DrawLabels.No -> DrawLabel.No
                             is DrawLabels.Yes -> DrawLabel.Yes(drawLabels.accidentals[i], colors.accidentalsLabel)
                         }
                         val dist = NaturalsDistances[i]
+                        val offset = offsets[i]
                         x += (naturalsSize.width + space) * dist
                         KeyboardKey(
                             modifier = Modifier.offset(x = x - offset),
@@ -144,6 +159,34 @@ private fun BoxWithConstraintsScope.calcKeyboardSizeFromHeight(octaves: Int): Dp
         width = height * octaves * OctaveWidthToHeightRatio,
         height = height,
     )
+}
+
+private fun calcStaggeringAccidentalsOffsets(
+    accidentalWidth: Dp,
+): List<Dp> {
+    val groups = mutableListOf<MutableList<Int>>()
+    fun addNewGroup() {
+        groups += mutableListOf<Int>()
+    }
+    NaturalsDistances.forEach { dist ->
+        if (dist == 1) {
+            val hasGroup = groups.lastOrNull() != null
+            if (!hasGroup) addNewGroup()
+        } else {
+            addNewGroup()
+        }
+        groups.last() += dist
+    }
+    return groups
+        .map { group ->
+            val step = 1f / (group.size + 1)
+            var offset = 1f
+            List(group.size) {
+                offset -= step
+                accidentalWidth * offset
+            }
+        }
+        .flatten()
 }
 
 @Composable
@@ -204,7 +247,7 @@ object KeyboardDefaults {
             accidentalsIndication = accidentalsIndication,
         )
 
-    data class Colors constructor(
+    data class Colors(
         val naturals: Color,
         val naturalsLabel: Color,
         val naturalsIndication: Color,
@@ -227,10 +270,29 @@ object KeyboardDefaults {
         object No : DrawLabel
         data class Yes(val label: String, val color: Color) : DrawLabel
     }
+
+    enum class AccidentalsPlacement {
+        Center,
+        Staggering,
+    }
 }
 
-private val NaturalsDistances = listOf(1, 1, 2, 1, 1) // successived number of natural keys to the next accidental key
+private val NaturalsDistances = listOf(1, 1, 2, 1, 1) // successive number of natural keys to the next accidental key
 
 private const val OctaveWidthToHeightRatio = 11f / 10
 private const val AccidentalsToNaturalsHeightRatio = 2f / 3
 private const val AccidentalsToNaturalsWidthRatio = 13f / 23
+
+@Preview
+@Composable
+private fun KeyboardPreview() {
+    MusicMindTheme {
+        Keyboard(
+            modifier = Modifier.background(Color.Black),
+            octaves = 2,
+            onNaturalKeyClick = {},
+            onAccidentalKeyClick = {},
+            accidentalsPlacement = AccidentalsPlacement.Staggering,
+        )
+    }
+}
